@@ -164,9 +164,49 @@ router.put('/', function (req, res) {
     res.end('');
 });
 
-router.delete('/', function (req, res) {
+router.delete('/:ticket_id', function (req, res) {
     // delete ticket code here
-    res.end('');
+
+    if (!req.params.ticket_id) {
+        res.json({
+            status: 'error',
+            message: 'Error while querying tickets',
+            data: {},
+        });
+        return;
+
+        // res.send('');
+    } else {
+        let ticket_id = req.params.ticket_id;
+
+        Ticket.destroy({
+            where: { ticket_id: ticket_id },
+        })
+            .then((data) => {
+                if (data) {
+                    res.json({
+                        status: 'success',
+                        message: 'Ticket deleted successfully',
+                        data: {},
+                    });
+                    return;
+                }
+                res.json({
+                    status: 'error',
+                    message: 'Invalid id',
+                    data: {},
+                });
+                return;
+            })
+            .catch((err) => {
+                console.log(err);
+                res.json({
+                    status: 'error',
+                    message: 'Error while querying data',
+                    data: {},
+                });
+            });
+    }
 });
 
 // tickets summary for dashboard
