@@ -156,9 +156,70 @@ router.post('/', function (req, res) {
         });
 });
 
-router.put('/', function (req, res) {
+router.put('/:ticket_id', function (req, res) {
     // update already existing ticket code here
-    res.end('');
+
+    if (!req.params.ticket_id) {
+        res.json({
+            status: 'error',
+            message: 'Ticket id is not provided',
+            data: {},
+        });
+        return;
+    } else {
+        const ticket_id = req.params.ticket_id;
+        const updated_on = `${todays_date()} by ${
+            req.body.employee_data.emp_name
+        }`;
+        const status = req.body.status;
+        const priority = req.body.priority;
+        const contact = req.body.contact ? req.body.contact : null;
+        const subject = req.body.subject;
+        const description = req.body.description;
+        const client_id = req.body.client_id;
+
+        Ticket.findOne({ where: { ticket_id: ticket_id } })
+            .then((ticket) => {
+                Ticket.update(
+                    {
+                        updated_on: updated_on,
+                        status: status,
+                        priority: priority,
+                        contact: contact,
+                        subject: subject,
+                        description: description,
+                        client_id: client_id,
+                    },
+                    { where: { ticket_id: ticket_id } }
+                )
+                    .then((ticket) => {
+                        res.json({
+                            status: 'success',
+                            message: 'Ticket successfully updated',
+                            data: {},
+                        });
+                        return;
+                    })
+                    .catch((err) => {
+                        console.log('Error: ', err);
+                        res.json({
+                            status: 'error',
+                            message: 'Error while updating ticket',
+                            data: {},
+                        });
+                        return;
+                    });
+            })
+            .catch((err) => {
+                console.log('Error: ', err);
+                res.json({
+                    status: 'error',
+                    message: 'Invalid ticket id',
+                    data: {},
+                });
+                return;
+            });
+    }
 });
 
 router.delete('/:ticket_id', function (req, res) {
@@ -172,7 +233,7 @@ router.delete('/:ticket_id', function (req, res) {
         });
         return;
     } else {
-        let ticket_id = req.params.ticket_id;
+        const ticket_id = req.params.ticket_id;
 
         Ticket.destroy({
             where: { ticket_id: ticket_id },
