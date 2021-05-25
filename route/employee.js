@@ -24,7 +24,7 @@ router.post('/', function (req, res) {
                 let employee_data = {
                     emp_id: data.dataValues.emp_id,
                     emp_name: data.dataValues.emp_name,
-                    emp_role: data.dataValues.emp_role,
+                    is_emp: data.dataValues.emp_role,
                     emp_email: data.dataValues.emp_email,
                 };
 
