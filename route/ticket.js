@@ -56,8 +56,6 @@ router.get('/:ticket_id?', function (req, res) {
                 });
                 return;
             });
-
-        // res.send('');
     } else {
         // supplied data for supplied ticket id  code here
         let ticket_id = req.params.ticket_id;
@@ -67,14 +65,14 @@ router.get('/:ticket_id?', function (req, res) {
                 if (!ticket) {
                     res.json({
                         status: 'error',
-                        message: 'Invalid Ticket ID',
+                        message: 'Invalid ticket id',
                         data: {},
                     });
                     return;
                 }
                 res.json({
                     status: 'success',
-                    message: 'Ticket Data Successfully Retrieved',
+                    message: 'Ticket data successfully retrieved',
                     data: ticket.dataValues,
                 });
                 return;
@@ -88,8 +86,6 @@ router.get('/:ticket_id?', function (req, res) {
                 });
                 return;
             });
-
-        // res.send('');
     }
 });
 
@@ -141,7 +137,7 @@ router.post('/', function (req, res) {
         .then((ticket) => {
             res.json({
                 status: 'success',
-                message: 'Ticket Created Successfully',
+                message: 'Ticket created successfully',
                 data: ticket.dataValues,
             });
             return;
@@ -155,8 +151,6 @@ router.post('/', function (req, res) {
             });
             return;
         });
-
-    // res.end('');
 });
 
 router.put('/', function (req, res) {
@@ -170,12 +164,10 @@ router.delete('/:ticket_id', function (req, res) {
     if (!req.params.ticket_id) {
         res.json({
             status: 'error',
-            message: 'Error while querying tickets',
+            message: 'Ticket id is not provided',
             data: {},
         });
         return;
-
-        // res.send('');
     } else {
         let ticket_id = req.params.ticket_id;
 
@@ -251,7 +243,7 @@ router.get('/summary', (req, res) => {
         .then((response) => {
             res.json({
                 status: 'success',
-                message: 'Promises resolved successfully',
+                message: 'Data retrieved successfully',
                 data: {
                     totalTickets: response[0],
                     openTicket: response[1],
