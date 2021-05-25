@@ -35,6 +35,10 @@ const Ticket = db.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         updated_on: {
             type: DataTypes.STRING,
             allowNull: false,
