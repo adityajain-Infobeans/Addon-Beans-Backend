@@ -99,9 +99,10 @@ router.post('/', function (req, res) {
     const priority = req.body.priority;
     const contact = req.body.contact ? req.body.contact : null;
     const subject = req.body.subject;
+    const description = req.body.description;
     const client_id = req.body.client_id;
 
-    if (!(status && priority && subject && client_id)) {
+    if (!(status && priority && subject && client_id && description)) {
         res.json({
             status: 'error',
             message: 'Parameter missing',
@@ -119,6 +120,7 @@ router.post('/', function (req, res) {
             priority: priority,
             contact: contact,
             subject: subject,
+            description: description,
             client_id: client_id,
         },
         {
@@ -130,6 +132,7 @@ router.post('/', function (req, res) {
                 'priority',
                 'contact',
                 'subject',
+                'description',
                 'client_id',
             ],
         }
