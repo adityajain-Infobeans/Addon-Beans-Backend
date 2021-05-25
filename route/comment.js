@@ -20,11 +20,13 @@ let todays_date = () => {
     return `${dd}-${mm}-${yyyy}`;
 };
 
-router.get('/:comment_id?', function (req, res) {
+router.get('/:comment_id', function (req, res) {
     if (!req.params.comment_id) {
-        // send all comments for dashboard  code here
-
-        res.send('');
+        res.json({
+            status: 'error',
+            message: 'Comment id not provided.',
+            data: {},
+        });
     } else {
         // supplied data for supplied comment id  code here
         res.send('');
