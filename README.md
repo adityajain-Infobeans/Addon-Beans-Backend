@@ -31,7 +31,7 @@ Frontend will communicate with Backend via REST APIs for authentication and data
 4. Passport & JWT
 5. CORS enabled
 
-# front-end
+# Back-end
 
 ## Server starting command
 
