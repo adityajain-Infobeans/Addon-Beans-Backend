@@ -85,7 +85,7 @@ app.delete('*', (req, res) => {
     res.status(404).send('Invalid path, please read the document');
 });
 
-app.listen(port);
+app.listen(process.env.PORT || port);
 
 function db_connect(req, res, next) {
     db.authenticate()
