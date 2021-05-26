@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/Ticket');
-const Comment = require('../models/Comment');
 const { Op } = require('sequelize');
 
 let todays_date = () => {
@@ -71,33 +70,12 @@ router.get('/:ticket_id?', function (req, res) {
                     });
                     return;
                 }
-
-                Comment.findAll({ where: { ticket_id: ticket_id } })
-                    .then((comments) => {
-                        let commentsValues = [];
-                        for (const comment of comments) {
-                            commentsValues.push(comment.dataValues);
-                        }
-
-                        res.json({
-                            status: 'success',
-                            message: 'Ticket data successfully retrieved',
-                            data: {
-                                ticketData: ticket.dataValues,
-                                CommentData: commentsValues,
-                            },
-                        });
-                        return;
-                    })
-                    .catch((err) => {
-                        console.log('Error: ', err);
-                        res.json({
-                            status: 'error',
-                            message: 'Error while querying comments',
-                            data: {},
-                        });
-                        return;
-                    });
+                res.json({
+                    status: 'success',
+                    message: 'Ticket data successfully retrieved',
+                    data: ticket.dataValues,
+                });
+                return;
             })
             .catch((err) => {
                 console.log('Error: ', err);
