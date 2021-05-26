@@ -37,6 +37,22 @@ app.get('/', (req, res) => {
     res.send('Imagine api doc here');
 });
 
+app.get('*', (req, res) => {
+    res.send('Invalid path, please read the document').status(400);
+});
+
+app.post('*', (req, res) => {
+    res.send('Invalid path, please read the document').status(400);
+});
+
+app.put('*', (req, res) => {
+    res.send('Invalid path, please read the document').status(400);
+});
+
+app.delete('*', (req, res) => {
+    res.send('Invalid path, please read the document').status(400);
+});
+
 app.listen(port);
 
 function db_connect(req, res, next) {
