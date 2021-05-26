@@ -39,6 +39,10 @@ const Comment = db.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        updated_on: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     },
     {
         tableName: 'infobeans_comments',

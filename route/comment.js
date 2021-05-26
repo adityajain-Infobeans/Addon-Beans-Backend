@@ -103,7 +103,60 @@ router.get('/:comment_id', function (req, res) {
 
 router.post('/', function (req, res) {
     // add comment to db code here
-    res.end('');
+    const emp_id = req.body.employee_data.emp_id;
+    const emp_name = req.body.employee_data.emp_name;
+    const created_on = todays_date() + ' by ' + req.body.employee_data.emp_name;
+    const updated_on = `${todays_date()} by ${req.body.employee_data.emp_name}`;
+    const ticket_id = req.body.ticket_id;
+    const comment = req.body.comment;
+
+    if (!(ticket_id && comment)) {
+        res.json({
+            status: 'error',
+            message: 'Parameter missing',
+            data: {},
+        });
+        return;
+    }
+
+    Comment.create(
+        {
+            emp_id: emp_id,
+            created_on: created_on,
+            updated_on: updated_on,
+            comment_by: emp_name,
+            ticket_id: ticket_id,
+            comment: comment,
+        },
+        {
+            fields: [
+                'emp_id',
+                'created_on',
+                'updated_on',
+                'comment_by',
+                'ticket_id',
+                'contact',
+                'comment',
+            ],
+        }
+    )
+        .then((comment) => {
+            res.json({
+                status: 'success',
+                message: 'Comment created successfully',
+                data: comment.dataValues,
+            });
+            return;
+        })
+        .catch((err) => {
+            console.log('Error: ', err);
+            res.json({
+                status: 'error',
+                message: 'Error while querying comment',
+                data: {},
+            });
+            return;
+        });
 });
 
 router.put('/:comment_id', function (req, res) {
