@@ -29,7 +29,75 @@ router.get('/:comment_id', function (req, res) {
         });
     } else {
         // supplied data for supplied comment id  code here
-        res.send('');
+        let comment_id = req.params.comment_id;
+
+        if (comment_id[0] === 'T') {
+            let ticket_id = comment_id.slice(2);
+
+            Comment.findAll({ where: { ticket_id: ticket_id } })
+                .then((comments) => {
+                    let commentsValues = [];
+                    for (const comment of comments) {
+                        commentsValues.push(comment.dataValues);
+                    }
+
+                    res.json({
+                        status: 'success',
+                        message: 'Comment data successfully retrieved',
+                        data: commentsValues,
+                    });
+                    return;
+                })
+                .catch((err) => {
+                    console.log('Error: ', err);
+                    res.json({
+                        status: 'error',
+                        message: 'Error while querying comments',
+                        data: {},
+                    });
+                    return;
+                });
+
+            return;
+        } else if (comment_id[0] === 'C') {
+            comment_id = comment_id.slice(2);
+            Comment.findByPk(comment_id)
+                .then((comment) => {
+                    if (!comment) {
+                        res.json({
+                            status: 'error',
+                            message: 'Invalid comment id',
+                            data: {},
+                        });
+                        return;
+                    }
+                    res.json({
+                        status: 'success',
+                        message: 'Comment data successfully retrieved',
+                        data: comment.dataValues,
+                    });
+                    return;
+                })
+                .catch((err) => {
+                    console.log('Error: ', err);
+                    res.json({
+                        status: 'error',
+                        message: 'Error while querying comment',
+                        data: {},
+                    });
+                    return;
+                });
+
+            return;
+        } else {
+            res.json({
+                status: 'error',
+                message: 'Invalid id',
+                data: {},
+            });
+
+            return;
+        }
     }
 });
 
