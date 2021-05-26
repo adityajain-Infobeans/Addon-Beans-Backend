@@ -19,6 +19,39 @@ app.use(cors());
 app.use(express.json());
 app.use(db_connect); // Custom middleware to check if DB is available of not
 
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'Infobeans Support Ticket System ',
+        version: '1.0.0',
+        description:
+            'A simple web application where Frontend  is created using Vue and Backend is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
+
+        contact: {
+            name: 'Aditya Jain',
+            url: 'https://aadityajain.dev',
+        },
+    },
+    servers: [
+        {
+            url: 'http://localhost:3000',
+            description: 'Development server',
+        },
+        {
+            url: 'https://infobeans-support.herokuapp.com/',
+            description: 'Production server',
+        },
+    ],
+};
+
+const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ['./routes/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
 /* 
 
 API :
@@ -34,10 +67,7 @@ app.use('/employee', Employee);
 app.use('/ticket', checkAuth, Ticket);
 app.use('/comment', checkAuth, Comment);
 app.use('/client', checkAuth, Client);
-
-app.get('/', (req, res) => {
-    res.send('Imagine api doc here');
-});
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('*', (req, res) => {
     res.status(404).send('Invalid path, please read the document');
