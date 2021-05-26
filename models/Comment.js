@@ -27,6 +27,10 @@ const Comment = db.define(
                 key: 'emp_id',
             },
         },
+        comment_by: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         comment: {
             type: DataTypes.STRING,
             allowNull: false,
