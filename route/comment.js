@@ -161,7 +161,58 @@ router.post('/', function (req, res) {
 
 router.put('/:comment_id', function (req, res) {
     // update already existing comment code here
-    res.end('');
+
+    if (!req.params.comment_id) {
+        res.json({
+            status: 'error',
+            message: 'Comment id is not provided',
+            data: {},
+        });
+        return;
+    } else {
+        const comment_id = req.params.comment_id;
+        const updated_on = `${todays_date()} by ${
+            req.body.employee_data.emp_name
+        }`;
+        const comment = req.body.comment;
+
+        Comment.findOne({ where: { comment_id: comment_id } })
+            .then((comment) => {
+                Comment.update(
+                    {
+                        updated_on: updated_on,
+                        comment: comment,
+                    },
+                    { where: { comment_id: comment_id } }
+                )
+                    .then((comment) => {
+                        res.json({
+                            status: 'success',
+                            message: 'Comment successfully updated',
+                            data: {},
+                        });
+                        return;
+                    })
+                    .catch((err) => {
+                        console.log('Error: ', err);
+                        res.json({
+                            status: 'error',
+                            message: 'Error while updating comment',
+                            data: {},
+                        });
+                        return;
+                    });
+            })
+            .catch((err) => {
+                console.log('Error: ', err);
+                res.json({
+                    status: 'error',
+                    message: 'Invalid comment id',
+                    data: {},
+                });
+                return;
+            });
+    }
 });
 
 router.delete('/:comment_id', function (req, res) {
