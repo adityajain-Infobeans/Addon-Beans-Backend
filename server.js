@@ -2,6 +2,8 @@ const express = require('express');
 var cors = require('cors');
 const db = require('./database');
 const jwt = require('jsonwebtoken');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const port = 3000;
@@ -38,19 +40,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-    res.send('Invalid path, please read the document').status(400);
+    res.status(404).send('Invalid path, please read the document');
 });
 
 app.post('*', (req, res) => {
-    res.send('Invalid path, please read the document').status(400);
+    res.status(404).send('Invalid path, please read the document');
 });
 
 app.put('*', (req, res) => {
-    res.send('Invalid path, please read the document').status(400);
+    res.status(404).send('Invalid path, please read the document');
 });
 
 app.delete('*', (req, res) => {
-    res.send('Invalid path, please read the document').status(400);
+    res.status(404).send('Invalid path, please read the document');
 });
 
 app.listen(port);
