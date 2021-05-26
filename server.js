@@ -95,14 +95,6 @@ function db_connect(req, res, next) {
         })
         .catch((err) => {
             console.log('Error ', err);
-            // temp comment for heroku debugging
-            console.log(
-                'sql config ',
-                process.env.SQL_Server,
-                process.env.SQL_Password,
-                process.env.SQL_Username,
-                process.env.SQL_Port
-            );
             res.json({
                 status: 'error',
                 message: 'error occurred while connecting with database',

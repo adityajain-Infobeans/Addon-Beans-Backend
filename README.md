@@ -3,7 +3,7 @@
 A simple single page application where Frontend and Backend code will be completely separated,
 Frontend will communicate with Backend via REST APIs for authentication and database operations.
 
-##### Front-end (Create using VueJS, Vuetify, Vuex)
+##### Front-end (Create using VueJS, Vuetify, Vuex) https://adityajain-infobeans.github.io/Support-Ticket-System-Frontend/
 
 1. Login page (simple form with fields username/password)
 2. There will 2 types of Users
@@ -23,7 +23,7 @@ Frontend will communicate with Backend via REST APIs for authentication and data
     - Edit their ticket
     - Delete Their Ticket
 
-##### Backend :
+##### Backend : https://infobeans-support.herokuapp.com/
 
 1. DataBase MySQL 8
 2. NodeJS
