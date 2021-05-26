@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Client = require('../models/Client');
 
+/**
+ * @swagger
+ * /client:
+ *   get:
+ *     summary: Retrieve clients list.
+ *     description: Retrieve a list of clients from our database. JWT token is required
+ *     security:
+ *       - Bearer: []
+ */
+
 router.get('/', function (req, res) {
     // show all clients code here
 
