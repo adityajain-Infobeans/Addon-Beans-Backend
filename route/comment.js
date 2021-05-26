@@ -106,14 +106,51 @@ router.post('/', function (req, res) {
     res.end('');
 });
 
-router.put('/', function (req, res) {
+router.put('/:comment_id', function (req, res) {
     // update already existing comment code here
     res.end('');
 });
 
-router.delete('/', function (req, res) {
+router.delete('/:comment_id', function (req, res) {
     // delete comment code here
-    res.end('');
+    if (!req.params.comment_id) {
+        res.json({
+            status: 'error',
+            message: 'Comment id is not provided',
+            data: {},
+        });
+        return;
+    } else {
+        const comment_id = req.params.comment_id;
+
+        Comment.destroy({
+            where: { comment_id: comment_id },
+        })
+            .then((data) => {
+                if (data) {
+                    res.json({
+                        status: 'success',
+                        message: 'Comment deleted successfully',
+                        data: {},
+                    });
+                    return;
+                }
+                res.json({
+                    status: 'error',
+                    message: 'Invalid id',
+                    data: {},
+                });
+                return;
+            })
+            .catch((err) => {
+                console.log(err);
+                res.json({
+                    status: 'error',
+                    message: 'Error while querying data',
+                    data: {},
+                });
+            });
+    }
 });
 
 module.exports = router;
