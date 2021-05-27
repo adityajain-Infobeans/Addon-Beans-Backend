@@ -21,16 +21,36 @@ app.use(express.json());
 const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-        title: 'Infobeans Support Ticket System ',
+        title: 'Support Ticket System ',
         version: '1.0.0',
         description:
-            'A simple web application where Frontend  is created using Vue and Backend is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
+            'A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
 
         contact: {
             name: 'Aditya Jain',
             url: 'https://aadityajain.dev',
+            email: 'adityan.jain@infobeans.com',
         },
     },
+    tags: [
+        {
+            name: 'Client',
+            description: 'Client list API',
+        },
+        {
+            name: 'Comment',
+            description: 'Comments CRUD API',
+        },
+        {
+            name: 'Employee',
+            description: 'Employee login API',
+        },
+        {
+            name: 'Ticket',
+            description: 'Tickets CRUD API',
+        },
+    ],
+
     servers: [
         {
             url: 'http://localhost:3000',
