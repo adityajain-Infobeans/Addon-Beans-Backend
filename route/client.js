@@ -7,9 +7,9 @@ const Client = require('../models/Client');
  * /client:
  *   get:
  *     summary: Retrieve clients list.
+ *     tags:
+ *        - Client
  *     description: Retrieve a list of clients from our database. JWT token is required
- *     security:
- *       - Bearer: []
  */
 
 router.get('/', function (req, res) {
