@@ -66,6 +66,21 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
+    components: {
+        securitySchemes: {
+            jwt: {
+                type: 'http',
+                scheme: 'bearer',
+                in: 'header',
+                bearerFormat: 'JWT',
+            },
+        },
+    },
+    security: [
+        {
+            jwt: [],
+        },
+    ],
     apis: ['./route/*.js'],
 };
 

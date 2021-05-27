@@ -39,8 +39,6 @@ let todays_date = () => {
  *     responses:
  *       '200':
  *         description: successful operation
- *         schema:
- *           $ref: '#/definitions/Comment1'
  *       '400':
  *         description: Invalid ID supplied
  *       '404':
@@ -66,8 +64,6 @@ let todays_date = () => {
  *     responses:
  *       '200':
  *         description: successful operation
- *         schema:
- *           $ref: '#/definitions/Comment1'
  *       '400':
  *         description: Invalid ID supplied
  *       '404':
@@ -173,8 +169,6 @@ router.get('/:comment_id', function (req, res) {
  *     responses:
  *       '200':
  *         description: successful operation
- *         schema:
- *           $ref: '#/definitions/Comment1'
  *       '400':
  *         description: Invalid ID supplied
  *       '404':
@@ -258,8 +252,6 @@ router.post('/', function (req, res) {
  *     responses:
  *       '200':
  *         description: successful operation
- *         schema:
- *           $ref: '#/definitions/Comment1'
  *       '400':
  *         description: Invalid ID supplied
  *       '404':
@@ -341,8 +333,6 @@ router.put('/:comment_id', function (req, res) {
  *     responses:
  *       '200':
  *         description: successful operation
- *         schema:
- *           $ref: '#/definitions/Comment1'
  *       '400':
  *         description: Invalid ID supplied
  *       '404':

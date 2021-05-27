@@ -6,6 +6,8 @@ const Client = require('../models/Client');
  * @swagger
  * /client:
  *   get:
+ *	    security:
+ *	      - jwt: []
  *     summary: Retrieve clients list.
  *     tags:
  *        - Client
