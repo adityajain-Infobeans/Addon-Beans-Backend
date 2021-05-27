@@ -4,6 +4,16 @@ const Employee = require('../models/Employee');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+/**
+ * @swagger
+ * /employee:
+ *   post:
+ *     summary: Authenticate user & provide JWT.
+ *     tags:
+ *        - Employee
+ *     description: Checks provided user credentials with the database, if they match, authorize user & provide JWT,else send error message
+ */
+
 router.post('/', function (req, res) {
     if (!req.body.email || !req.body.password) {
         res.json({
