@@ -73,6 +73,53 @@
                     }
                 }
             }
+        },
+        "/employee": {
+            "post": {
+                "summary": "Authenticate user & provide JWT",
+                "tags": ["Employee"],
+                "description": "Checks provided user credentials with the database, if they match, authorize user & provide JWT,else send error message",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+
+                "requestBody": {
+                    "description": "Checks provided user credentials with the database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["email", "password"],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Employee Found"
+                    },
+                    "406": {
+                        "description": "No Employee found with these credentials"
+                    },
+                    "500": {
+                        "description": "error occurred while querying"
+                    },
+                    "503": {
+                        "description": "Error while signing JWT"
+                    },
+                    "400": {
+                        "description": "Some Parameter missing"
+                    }
+                }
+            }
         }
     }
 }
