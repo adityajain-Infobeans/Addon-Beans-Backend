@@ -22,6 +22,10 @@
     },
     "tags": [
         {
+            "name": "Employee",
+            "description": "Employee login API"
+        },
+        {
             "name": "Client",
             "description": "Client list API"
         },
@@ -29,10 +33,7 @@
             "name": "Comment",
             "description": "Comments CRUD API"
         },
-        {
-            "name": "Employee",
-            "description": "Employee login API"
-        },
+
         {
             "name": "Ticket",
             "description": "Tickets CRUD API"
@@ -382,6 +383,184 @@
                     },
                     "500": {
                         "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/comment/{comment_id}": {
+            "get": {
+                "summary": "Get comment data",
+                "tags": ["Comment"],
+                "description": "It will fetch all data associated with provided ticket id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "comment_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "description": "Comment id (required)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment data successfully retrieved"
+                    },
+                    "400": {
+                        "description": "Comment id not provided."
+                    },
+                    "406": {
+                        "description": "Comment id dosent exist in database"
+                    },
+                    "503": {
+                        "description": "Error while querying comment"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update comment data of provided comment id",
+                "tags": ["Comment"],
+                "description": "Update comment data of provided comment id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "comment_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "description": "Comment id (required)"
+                    }
+                ],
+                "requestBody": {
+                    "description": "new comment content",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["comment"],
+                                "properties": {
+                                    "comment": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Summary data retrieved successfully"
+                    },
+                    "400": {
+                        "description": "Comment id is not provided"
+                    },
+                    "500": {
+                        "description": "Error while updating comment"
+                    },
+                    "404": {
+                        "description": "Invalid comment id"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete comment data from database",
+                "tags": ["Comment"],
+                "description": "Delete the comment with provided id from the database. JWT token is required",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "comment_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "description": "Comment id (required)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment deleted successfully"
+                    },
+                    "400": {
+                        "description": "Comment id is not provided"
+                    },
+                    "404": {
+                        "description": "Invalid id"
+                    },
+                    "500": {
+                        "description": "Error while querying data"
+                    }
+                }
+            }
+        },
+        "/comment/": {
+            "post": {
+                "summary": "Write comment data to database",
+                "tags": ["Comment"],
+                "description": "Create a new entry by writing the provided comment data in the database. JWT token is required",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create a new entry by writing the provided comment data in the database",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["comment", "ticket_id"],
+                                "properties": {
+                                    "ticket_id": {
+                                        "type": "integer"
+                                    },
+                                    "comment": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comment created successfully"
+                    },
+                    "400": {
+                        "description": "Parameter missing"
+                    },
+                    "503": {
+                        "description": "Error while querying comment"
                     }
                 }
             }
