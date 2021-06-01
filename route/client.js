@@ -7,7 +7,7 @@ const Client = require('../models/Client');
  * /client:
  *   get:
  *	    security:
- *	      - jwt: []
+ *	      - bearerAuth: []
  *     summary: Retrieve clients list.
  *     tags:
  *        - Client
@@ -27,7 +27,7 @@ router.get('/', function (req, res) {
             }
 
             if (clientsList.length === 0) {
-                res.json({
+                res.status(204).json({
                     status: 'success',
                     message: 'No client found in database',
                     data: { clientsList },
@@ -35,7 +35,7 @@ router.get('/', function (req, res) {
                 return;
             }
 
-            res.json({
+            res.status(200).json({
                 status: 'success',
                 message: 'Clients successfully retrieved from database',
                 data: { clientsList },
@@ -44,7 +44,7 @@ router.get('/', function (req, res) {
         })
         .catch((err) => {
             console.log('Error: ', err);
-            res.json({
+            res.status(500).json({
                 status: 'error',
                 message: 'Error while querying clients',
                 data: {},

@@ -6,17 +6,17 @@ require('dotenv').config();
 
 /**
  * @swagger
- * /employee:
+ * /:
  *   post:
- *     summary: Authenticate user & provide JWT.
+ *     summary: .
  *     tags:
  *        - Employee
- *     description: Checks provided user credentials with the database, if they match, authorize user & provide JWT,else send error message
+ *     description:
  */
 
 router.post('/', function (req, res) {
     if (!req.body.email || !req.body.password) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Some Parameter missing',
             data: {},
@@ -44,43 +44,39 @@ router.post('/', function (req, res) {
                     (err, JWT_data) => {
                         if (err) {
                             console.log('JWT Error: ', err);
-                            res.json({
+                            res.status(503).json({
                                 status: 'error',
                                 message: 'Error while signing JWT.',
                                 data: {},
                             });
-                            res.end();
                             return;
                         }
                         console.log('JWT data: ', JWT_data);
                         employee_data.token = JWT_data;
 
-                        res.json({
+                        res.status(200).json({
                             status: 'success',
                             message: 'Employee Found',
                             data: employee_data,
                         });
-                        res.end();
                     }
                 );
             } else {
-                res.json({
+                res.status(406).json({
                     status: 'error',
                     message: 'No Employee Found',
                     data: {},
                 });
-                res.end();
             }
         })
         .catch((err) => {
             console.log('error: ', err);
 
-            res.json({
+            res.status(500).json({
                 status: 'error',
                 message: 'error occurred while querying',
                 data: {},
             });
-            res.end();
         });
 });
 

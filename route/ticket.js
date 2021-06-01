@@ -41,7 +41,7 @@ router.get('/:ticket_id?', function (req, res) {
                 }
 
                 if (ticketsList.length === 0) {
-                    res.json({
+                    res.status(404).json({
                         status: 'success',
                         message: 'No ticket found in database',
                         data: { ticketsList },
@@ -49,7 +49,7 @@ router.get('/:ticket_id?', function (req, res) {
                     return;
                 }
 
-                res.json({
+                res.status(200).json({
                     status: 'success',
                     message: 'Tickets successfully retrieved from database',
                     data: { ticketsList },
@@ -58,7 +58,7 @@ router.get('/:ticket_id?', function (req, res) {
             })
             .catch((err) => {
                 console.log('Error: ', err);
-                res.json({
+                res.status(503).json({
                     status: 'error',
                     message: 'Error while querying tickets',
                     data: {},
@@ -72,14 +72,14 @@ router.get('/:ticket_id?', function (req, res) {
         Ticket.findByPk(ticket_id)
             .then((ticket) => {
                 if (!ticket) {
-                    res.json({
+                    res.status(200).json({
                         status: 'error',
                         message: 'Invalid ticket id',
                         data: {},
                     });
                     return;
                 }
-                res.json({
+                res.status(200).json({
                     status: 'success',
                     message: 'Ticket data successfully retrieved',
                     data: ticket.dataValues,
@@ -88,7 +88,7 @@ router.get('/:ticket_id?', function (req, res) {
             })
             .catch((err) => {
                 console.log('Error: ', err);
-                res.json({
+                res.status(200).json({
                     status: 'error',
                     message: 'Error while querying ticket',
                     data: {},
@@ -122,7 +122,7 @@ router.post('/', function (req, res) {
     const client_id = req.body.client_id;
 
     if (!(status && priority && subject && client_id && description)) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Parameter missing',
             data: {},
@@ -157,7 +157,7 @@ router.post('/', function (req, res) {
         }
     )
         .then((ticket) => {
-            res.json({
+            res.status(200).json({
                 status: 'success',
                 message: 'Ticket created successfully',
                 data: ticket.dataValues,
@@ -166,7 +166,7 @@ router.post('/', function (req, res) {
         })
         .catch((err) => {
             console.log('Error: ', err);
-            res.json({
+            res.status(503).json({
                 status: 'error',
                 message: 'Error while querying ticket',
                 data: {},
@@ -178,7 +178,7 @@ router.post('/', function (req, res) {
 /**
  * @swagger
  * /ticket/{ticket_id}:
- *   post:
+ *   put:
  *     summary: Update ticket entry in database.
  *     tags:
  *        - Ticket
@@ -189,7 +189,7 @@ router.put('/:ticket_id', function (req, res) {
     // update already existing ticket code here
 
     if (!req.params.ticket_id) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Ticket id is not provided',
             data: {},
@@ -222,7 +222,7 @@ router.put('/:ticket_id', function (req, res) {
                     { where: { ticket_id: ticket_id } }
                 )
                     .then((ticket) => {
-                        res.json({
+                        res.status(200).json({
                             status: 'success',
                             message: 'Ticket successfully updated',
                             data: {},
@@ -231,7 +231,7 @@ router.put('/:ticket_id', function (req, res) {
                     })
                     .catch((err) => {
                         console.log('Error: ', err);
-                        res.json({
+                        res.status(500).json({
                             status: 'error',
                             message: 'Error while updating ticket',
                             data: {},
@@ -241,7 +241,7 @@ router.put('/:ticket_id', function (req, res) {
             })
             .catch((err) => {
                 console.log('Error: ', err);
-                res.json({
+                res.status(404).json({
                     status: 'error',
                     message: 'Invalid ticket id',
                     data: {},
@@ -265,7 +265,7 @@ router.delete('/:ticket_id', function (req, res) {
     // delete ticket code here
 
     if (!req.params.ticket_id) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Ticket id is not provided',
             data: {},
@@ -279,14 +279,14 @@ router.delete('/:ticket_id', function (req, res) {
         })
             .then((data) => {
                 if (data) {
-                    res.json({
+                    res.status(200).json({
                         status: 'success',
                         message: 'Ticket deleted successfully',
                         data: {},
                     });
                     return;
                 }
-                res.json({
+                res.status(404).json({
                     status: 'error',
                     message: 'Invalid id',
                     data: {},
@@ -295,7 +295,7 @@ router.delete('/:ticket_id', function (req, res) {
             })
             .catch((err) => {
                 console.log(err);
-                res.json({
+                res.status(503).json({
                     status: 'error',
                     message: 'Error while querying data',
                     data: {},
@@ -354,7 +354,7 @@ router.get('/summary', (req, res) => {
 
     Promise.all([totalTickets, openTicket, resolvedTicket])
         .then((response) => {
-            res.json({
+            res.status(200).json({
                 status: 'success',
                 message: 'Data retrieved successfully',
                 data: {
@@ -363,16 +363,14 @@ router.get('/summary', (req, res) => {
                     resolvedTicket: response[2],
                 },
             });
-            res.end();
         })
         .catch((err) => {
             console.log(err);
-            res.json({
+            res.status(500).json({
                 status: 'error',
                 message: 'error occurred with promise',
                 data: {},
             });
-            res.end();
         });
 });
 

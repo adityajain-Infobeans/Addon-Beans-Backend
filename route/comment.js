@@ -71,7 +71,7 @@ let todays_date = () => {
  */
 router.get('/:comment_id', function (req, res) {
     if (!req.params.comment_id) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Comment id not provided.',
             data: {},
@@ -90,7 +90,7 @@ router.get('/:comment_id', function (req, res) {
                         commentsValues.push(comment.dataValues);
                     }
 
-                    res.json({
+                    res.status(200).json({
                         status: 'success',
                         message: 'Comment data successfully retrieved',
                         data: commentsValues,
@@ -99,7 +99,7 @@ router.get('/:comment_id', function (req, res) {
                 })
                 .catch((err) => {
                     console.log('Error: ', err);
-                    res.json({
+                    res.status(200).json({
                         status: 'error',
                         message: 'Error while querying comments',
                         data: {},
@@ -113,14 +113,14 @@ router.get('/:comment_id', function (req, res) {
             Comment.findByPk(comment_id)
                 .then((comment) => {
                     if (!comment) {
-                        res.json({
+                        res.status(406).json({
                             status: 'error',
                             message: 'Invalid comment id',
                             data: {},
                         });
                         return;
                     }
-                    res.json({
+                    res.status(200).json({
                         status: 'success',
                         message: 'Comment data successfully retrieved',
                         data: comment.dataValues,
@@ -129,7 +129,7 @@ router.get('/:comment_id', function (req, res) {
                 })
                 .catch((err) => {
                     console.log('Error: ', err);
-                    res.json({
+                    res.status(503).json({
                         status: 'error',
                         message: 'Error while querying comment',
                         data: {},
@@ -139,7 +139,7 @@ router.get('/:comment_id', function (req, res) {
 
             return;
         } else {
-            res.json({
+            res.status(400).json({
                 status: 'error',
                 message: 'Invalid id',
                 data: {},
@@ -185,7 +185,7 @@ router.post('/', function (req, res) {
     const comment = req.body.comment;
 
     if (!(ticket_id && comment)) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Parameter missing',
             data: {},
@@ -215,7 +215,7 @@ router.post('/', function (req, res) {
         }
     )
         .then((comment) => {
-            res.json({
+            res.status(200).json({
                 status: 'success',
                 message: 'Comment created successfully',
                 data: comment.dataValues,
@@ -224,7 +224,7 @@ router.post('/', function (req, res) {
         })
         .catch((err) => {
             console.log('Error: ', err);
-            res.json({
+            res.status(503).json({
                 status: 'error',
                 message: 'Error while querying comment',
                 data: {},
@@ -262,7 +262,7 @@ router.put('/:comment_id', function (req, res) {
     // update already existing comment code here
 
     if (!req.params.comment_id) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Comment id is not provided',
             data: {},
@@ -285,7 +285,7 @@ router.put('/:comment_id', function (req, res) {
                     { where: { comment_id: comment_id } }
                 )
                     .then((comment) => {
-                        res.json({
+                        res.status(200).json({
                             status: 'success',
                             message: 'Comment successfully updated',
                             data: {},
@@ -294,7 +294,7 @@ router.put('/:comment_id', function (req, res) {
                     })
                     .catch((err) => {
                         console.log('Error: ', err);
-                        res.json({
+                        res.status(500).json({
                             status: 'error',
                             message: 'Error while updating comment',
                             data: {},
@@ -304,7 +304,7 @@ router.put('/:comment_id', function (req, res) {
             })
             .catch((err) => {
                 console.log('Error: ', err);
-                res.json({
+                res.status(404).json({
                     status: 'error',
                     message: 'Invalid comment id',
                     data: {},
@@ -342,7 +342,7 @@ router.put('/:comment_id', function (req, res) {
 router.delete('/:comment_id', function (req, res) {
     // delete comment code here
     if (!req.params.comment_id) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'Comment id is not provided',
             data: {},
@@ -356,14 +356,14 @@ router.delete('/:comment_id', function (req, res) {
         })
             .then((data) => {
                 if (data) {
-                    res.json({
+                    res.status(200).json({
                         status: 'success',
                         message: 'Comment deleted successfully',
                         data: {},
                     });
                     return;
                 }
-                res.json({
+                res.status(404).json({
                     status: 'error',
                     message: 'Invalid id',
                     data: {},
@@ -372,7 +372,7 @@ router.delete('/:comment_id', function (req, res) {
             })
             .catch((err) => {
                 console.log(err);
-                res.json({
+                res.status(500).json({
                     status: 'error',
                     message: 'Error while querying data',
                     data: {},
