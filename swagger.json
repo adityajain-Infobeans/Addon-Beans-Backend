@@ -1,0 +1,78 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Support Ticket System ",
+        "version": "1.0.0",
+        "description": "A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations",
+
+        "contact": {
+            "name": "Aditya Jain",
+            "url": "https://aadityajain.dev",
+            "email": "adityan.jain@infobeans.com"
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Client",
+            "description": "Client list API"
+        },
+        {
+            "name": "Comment",
+            "description": "Comments CRUD API"
+        },
+        {
+            "name": "Employee",
+            "description": "Employee login API"
+        },
+        {
+            "name": "Ticket",
+            "description": "Tickets CRUD API"
+        }
+    ],
+
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Development server"
+        },
+        {
+            "url": "https://infobeans-support.herokuapp.com/",
+            "description": "Production server"
+        }
+    ],
+
+    "paths": {
+        "/client": {
+            "get": {
+                "summary": "Retrieve clients list.",
+                "tags": ["Client"],
+                "description": "Retrieve a list of clients from our database. JWT token is required",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Clients successfully retrieved from database"
+                    },
+                    "204": {
+                        "description": "No client found in database"
+                    },
+                    "500": {
+                        "description": "Error while querying clients"
+                    }
+                }
+            }
+        }
+    }
+}
