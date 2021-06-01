@@ -4,6 +4,7 @@ const db = require('./database');
 const jwt = require('jsonwebtoken');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerDefinition = require('./swagger.json');
 
 const app = express();
 const port = 3000;
@@ -18,70 +19,63 @@ const Client = require('./route/client');
 app.use(cors());
 app.use(express.json());
 
-const swaggerDefinition = {
-    openapi: '3.0.0',
-    info: {
-        title: 'Support Ticket System ',
-        version: '1.0.0',
-        description:
-            'A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
+// const swaggerDefinition = {
+//     openapi: '3.0.0',
+//     info: {
+//         title: 'Support Ticket System ',
+//         version: '1.0.0',
+//         description:
+//             'A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
 
-        contact: {
-            name: 'Aditya Jain',
-            url: 'https://aadityajain.dev',
-            email: 'adityan.jain@infobeans.com',
-        },
-    },
-    tags: [
-        {
-            name: 'Client',
-            description: 'Client list API',
-        },
-        {
-            name: 'Comment',
-            description: 'Comments CRUD API',
-        },
-        {
-            name: 'Employee',
-            description: 'Employee login API',
-        },
-        {
-            name: 'Ticket',
-            description: 'Tickets CRUD API',
-        },
-    ],
+//         contact: {
+//             name: 'Aditya Jain',
+//             url: 'https://aadityajain.dev',
+//             email: 'adityan.jain@infobeans.com',
+//         },
+//     },
+//     components: {
+//         securitySchemes: {
+//             bearerAuth: {
+//                 type: 'http',
+//                 scheme: 'bearer',
+//                 bearerFormat: 'JWT',
+//             },
+//         },
+//     },
+//     tags: [
+//         {
+//             name: 'Client',
+//             description: 'Client list API',
+//         },
+//         {
+//             name: 'Comment',
+//             description: 'Comments CRUD API',
+//         },
+//         {
+//             name: 'Employee',
+//             description: 'Employee login API',
+//         },
+//         {
+//             name: 'Ticket',
+//             description: 'Tickets CRUD API',
+//         },
+//     ],
 
-    servers: [
-        {
-            url: 'http://localhost:3000',
-            description: 'Development server',
-        },
-        {
-            url: 'https://infobeans-support.herokuapp.com/',
-            description: 'Production server',
-        },
-    ],
-};
+//     servers: [
+//         {
+//             url: 'http://localhost:3000',
+//             description: 'Development server',
+//         },
+//         {
+//             url: 'https://infobeans-support.herokuapp.com/',
+//             description: 'Production server',
+//         },
+//     ],
+// };
 
 const options = {
     swaggerDefinition,
-    // Paths to files containing OpenAPI definitions
-    components: {
-        securitySchemes: {
-            jwt: {
-                type: 'http',
-                scheme: 'bearer',
-                in: 'header',
-                bearerFormat: 'JWT',
-            },
-        },
-    },
-    security: [
-        {
-            jwt: [],
-        },
-    ],
-    apis: ['./route/*.js'],
+    apis: ['./route/a.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -103,22 +97,6 @@ app.use('/comment', checkAuth, db_connect, Comment);
 app.use('/client', checkAuth, db_connect, Client);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get('*', (req, res) => {
-    res.status(404).send('Invalid path or method,, please read the document');
-});
-
-app.post('*', (req, res) => {
-    res.status(404).send('Invalid path or method,, please read the document');
-});
-
-app.put('*', (req, res) => {
-    res.status(404).send('Invalid path or method, please read the document');
-});
-
-app.delete('*', (req, res) => {
-    res.status(404).send('Invalid path or method,, please read the document');
-});
-
 app.listen(process.env.PORT || port);
 
 function db_connect(req, res, next) {
@@ -130,12 +108,11 @@ function db_connect(req, res, next) {
         })
         .catch((err) => {
             console.log('Error ', err);
-            res.json({
+            res.status(503).json({
                 status: 'error',
                 message: 'error occurred while connecting with database',
                 data: {},
             });
-            res.end();
         });
 }
 
@@ -147,7 +124,7 @@ function checkAuth(req, res, next) {
         jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
             if (err) {
                 console.log(err);
-                res.json({
+                res.status(401).json({
                     status: 'error',
                     message: 'JWT auth failed',
                     data: {},
@@ -158,7 +135,7 @@ function checkAuth(req, res, next) {
             next();
         });
     } else {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: 'JWT not provided',
             data: {},
