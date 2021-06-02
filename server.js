@@ -15,6 +15,7 @@ const Employee = require('./route/employee');
 const Ticket = require('./route/ticket');
 const Comment = require('./route/comment');
 const Client = require('./route/client');
+const Summary = require('./route/summary');
 
 app.use(cors());
 app.use(express.json());
@@ -95,6 +96,7 @@ app.use('/employee', db_connect, Employee);
 app.use('/ticket', checkAuth, db_connect, Ticket);
 app.use('/comment', checkAuth, db_connect, Comment);
 app.use('/client', checkAuth, db_connect, Client);
+app.use('/summary', checkAuth, db_connect, Summary);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(process.env.PORT || port);
