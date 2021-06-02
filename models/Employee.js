@@ -13,7 +13,7 @@ const Employee = db.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        emp_role: {
+        is_hr: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
