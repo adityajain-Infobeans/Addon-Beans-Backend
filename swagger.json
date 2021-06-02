@@ -366,9 +366,9 @@
         },
         "/summary/": {
             "get": {
-                "summary": "Get specific or all ticket data",
+                "summary": "Get tickets summary",
                 "tags": ["Ticket"],
-                "description": "If provided with ticket_id API will return that ticket data else, it will return all tickets data",
+                "description": "Fetch count of open tickets, closed tickets & total tickets",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -419,7 +419,7 @@
                         "description": "Comment id not provided."
                     },
                     "406": {
-                        "description": "Comment id dosent exist in database"
+                        "description": "Comment id doesn't exist in database"
                     },
                     "503": {
                         "description": "Error while querying comment"
@@ -516,6 +516,40 @@
                     },
                     "500": {
                         "description": "Error while querying data"
+                    }
+                }
+            }
+        },
+        "/comment/T_{ticket_id}": {
+            "get": {
+                "summary": "Get all comments of provided ticket",
+                "tags": ["Comment"],
+                "description": "It will fetch all comments associated with provided ticket id",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "ticket_id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "description": "Ticket id (required)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All comments successfully retrieved"
+                    },
+                    "503": {
+                        "description": "Error while querying comments"
                     }
                 }
             }
