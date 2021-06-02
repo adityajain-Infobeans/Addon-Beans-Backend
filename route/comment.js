@@ -92,14 +92,14 @@ router.get('/:comment_id', function (req, res) {
 
                     res.status(200).json({
                         status: 'success',
-                        message: 'Comment data successfully retrieved',
+                        message: 'All comments successfully retrieved',
                         data: commentsValues,
                     });
                     return;
                 })
                 .catch((err) => {
                     console.log('Error: ', err);
-                    res.status(200).json({
+                    res.status(503).json({
                         status: 'error',
                         message: 'Error while querying comments',
                         data: {},
@@ -108,8 +108,7 @@ router.get('/:comment_id', function (req, res) {
                 });
 
             return;
-        } else if (comment_id[0] === 'C') {
-            comment_id = comment_id.slice(2);
+        } else {
             Comment.findByPk(comment_id)
                 .then((comment) => {
                     if (!comment) {
@@ -136,14 +135,6 @@ router.get('/:comment_id', function (req, res) {
                     });
                     return;
                 });
-
-            return;
-        } else {
-            res.status(400).json({
-                status: 'error',
-                message: 'Invalid id',
-                data: {},
-            });
 
             return;
         }
@@ -273,14 +264,14 @@ router.put('/:comment_id', function (req, res) {
         const updated_on = `${todays_date()} by ${
             req.body.employee_data.emp_name
         }`;
-        const comment = req.body.comment;
+        const comment_data = req.body.comment;
 
         Comment.findOne({ where: { comment_id: comment_id } })
             .then((comment) => {
                 Comment.update(
                     {
                         updated_on: updated_on,
-                        comment: comment,
+                        comment: comment_data,
                     },
                     { where: { comment_id: comment_id } }
                 )
