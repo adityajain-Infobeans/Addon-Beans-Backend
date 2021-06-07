@@ -14,7 +14,7 @@ const { Op } = require('sequelize');
  */
 
 // tickets summary for dashboard
-router.get('/summary', (req, res) => {
+router.get('/', (req, res) => {
     const totalTickets = Ticket.count({})
         .then((data) => {
             return data;
