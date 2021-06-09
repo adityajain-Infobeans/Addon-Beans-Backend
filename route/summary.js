@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
     const openTicket = Ticket.count({
         where: {
             status: {
-                [Op.eq]: 'open',
+                [Op.eq]: 1,
             },
         },
     })
@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
     const resolvedTicket = Ticket.count({
         where: {
             status: {
-                [Op.eq]: 'closed',
+                [Op.eq]: 2,
             },
         },
     })

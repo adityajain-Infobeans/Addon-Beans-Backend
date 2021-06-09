@@ -114,14 +114,14 @@ router.post('/', function (req, res) {
     const emp_id = req.body.employee_data.emp_id;
     const created_on = todays_date() + ' by ' + req.body.employee_data.emp_name;
     const updated_on = `${todays_date()} by ${req.body.employee_data.emp_name}`;
-    const status = req.body.status;
+    const status = 1;
     const priority = req.body.priority;
     const contact = req.body.contact ? req.body.contact : null;
     const subject = req.body.subject;
     const description = req.body.description;
     const client_id = req.body.client_id;
 
-    if (!(status && priority && subject && client_id && description)) {
+    if (!(priority && subject && client_id && description)) {
         res.status(400).json({
             status: 'error',
             message: 'Parameter missing',
