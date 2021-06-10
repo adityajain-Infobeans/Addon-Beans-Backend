@@ -202,7 +202,7 @@ router.put('/:ticket_id', function (req, res) {
         }`;
         const status = req.body.status;
         const priority = req.body.priority;
-        const contact = req.body.contact ? req.body.contact : null;
+        const contact = req.body.contact;
         const subject = req.body.subject;
         const description = req.body.description;
         const client_id = req.body.client_id;
