@@ -20,15 +20,6 @@ let todays_date = () => {
     return `${dd}-${mm}-${yyyy}`;
 };
 
-/**
- * @swagger
- * /ticket/{ticket_id}:
- *   post:
- *     summary: Get specific or all ticket data.
- *     tags:
- *        - Ticket
- *     description: If provided with ticket_id API will return that ticket data else, it will return all tickets data
- */
 router.get('/:ticket_id?', function (req, res) {
     if (!req.params.ticket_id) {
         // send all tickets for dashboard  code here
@@ -133,16 +124,6 @@ router.get('/:ticket_id?', function (req, res) {
     }
 });
 
-/**
- * @swagger
- * /ticket/:
- *   post:
- *     summary: Create new ticket entry in database.
- *     tags:
- *        - Ticket
- *     description: Create a new entry with provided data in database
- */
-
 router.post('/', function (req, res) {
     // add ticket to db code here
 
@@ -210,16 +191,6 @@ router.post('/', function (req, res) {
         });
 });
 
-/**
- * @swagger
- * /ticket/{ticket_id}:
- *   put:
- *     summary: Update ticket entry in database.
- *     tags:
- *        - Ticket
- *     description: Update the ticket entry with provided id in database
- */
-
 router.put('/:ticket_id', function (req, res) {
     // update already existing ticket code here
 
@@ -285,16 +256,6 @@ router.put('/:ticket_id', function (req, res) {
             });
     }
 });
-
-/**
- * @swagger
- * /ticket:
- *   post:
- *     summary: Delete ticket entry from database.
- *     tags:
- *        - Ticket
- *     description: Delete the ticket with provided ticket id from database.
- */
 
 router.delete('/:ticket_id', function (req, res) {
     // delete ticket code here

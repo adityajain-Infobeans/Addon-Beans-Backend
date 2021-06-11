@@ -4,16 +4,6 @@ const Employee = require('../models/Employee');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-/**
- * @swagger
- * /:
- *   post:
- *     summary: .
- *     tags:
- *        - Employee
- *     description:
- */
-
 router.post('/', function (req, res) {
     if (!req.body.email || !req.body.password) {
         res.status(400).json({

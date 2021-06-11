@@ -20,55 +20,6 @@ let todays_date = () => {
     return `${dd}-${mm}-${yyyy}`;
 };
 
-/**
- * @swagger
- * /comment/T_{ticket_id}:
- *   get:
- *     summary: Retrieve all the comments of provided ticket from database.
- *     tags:
- *        - Comment
- *     description: Retrieve a list of the comments of provided ticket from the database. JWT token is required,
- *     operationId: getCommentById
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: ticket_id
- *         in: path
- *         description: ID of ticket whose comment to return
- *         required: true
- *     responses:
- *       '200':
- *         description: successful operation
- *       '400':
- *         description: Invalid ID supplied
- *       '404':
- *         description: Comment not found
- */
-
-/**
- * @swagger
- * /comment/C_{comment_id}:
- *   get:
- *     summary: Fetch comment data from database.
- *     tags:
- *        - Comment
- *     description: Fetch all the data of the provided comment id from the database. JWT token is required
- *     operationId: getCommentById
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: comment_id
- *         in: path
- *         description: ID of comment to return
- *         required: true
- *     responses:
- *       '200':
- *         description: successful operation
- *       '400':
- *         description: Invalid ID supplied
- *       '404':
- *         description: Comment not found
- */
 router.get('/:comment_id', function (req, res) {
     if (!req.params.comment_id) {
         res.status(400).json({
@@ -141,31 +92,6 @@ router.get('/:comment_id', function (req, res) {
     }
 });
 
-/**
- * @swagger
- * /comment/:
- *   post:
- *     summary: Write comment data to database.
- *     tags:
- *        - Comment
- *     description: Create a new entry by writing the provided comment data in the database. JWT token is required
- *     operationId: getCommentById
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: comment_id
- *         in: path
- *         description: ID of comment to return
- *         required: true
- *     responses:
- *       '200':
- *         description: successful operation
- *       '400':
- *         description: Invalid ID supplied
- *       '404':
- *         description: Comment not found
- */
-
 router.post('/', function (req, res) {
     // add comment to db code here
     const emp_id = req.body.employee_data.emp_id;
@@ -224,31 +150,6 @@ router.post('/', function (req, res) {
         });
 });
 
-/**
- * @swagger
- * /comment/{comment_id}:
- *   put:
- *     summary: Update comment data in database.
- *     tags:
- *        - Comment
- *     description: Update the comment entry in our database with the provided data. JWT token is required
- *     operationId: getCommentById
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: comment_id
- *         in: path
- *         description: ID of comment to return
- *         required: true
- *     responses:
- *       '200':
- *         description: successful operation
- *       '400':
- *         description: Invalid ID supplied
- *       '404':
- *         description: Comment not found
- */
-
 router.put('/:comment_id', function (req, res) {
     // update already existing comment code here
 
@@ -304,31 +205,6 @@ router.put('/:comment_id', function (req, res) {
             });
     }
 });
-
-/**
- * @swagger
- * /comment/{comment_id}:
- *   delete:
- *     summary: Delete comment data from database.
- *     tags:
- *        - Comment
- *     description: Delete the comment with provided id from the database. JWT token is required
- *     operationId: getCommentById
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: comment_id
- *         in: path
- *         description: ID of comment to return
- *         required: true
- *     responses:
- *       '200':
- *         description: successful operation
- *       '400':
- *         description: Invalid ID supplied
- *       '404':
- *         description: Comment not found
- */
 
 router.delete('/:comment_id', function (req, res) {
     // delete comment code here

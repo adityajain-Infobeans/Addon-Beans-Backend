@@ -3,16 +3,6 @@ const router = express.Router();
 const Ticket = require('../models/Ticket');
 const { Op } = require('sequelize');
 
-/**
- * @swagger
- * /ticket/summary:
- *   get:
- *     summary: Fetch summary of statistics.
- *     tags:
- *        - Ticket
- *     description: Fetch count of open tickets,closed ticket & total tickets JWT,else send error message
- */
-
 // tickets summary for dashboard
 router.get('/', (req, res) => {
     const totalTickets = Ticket.count({})
