@@ -79,7 +79,7 @@ CREATE TABLE `infobeans_employee_details` (
 --
 
 INSERT INTO `infobeans_employee_details` (`emp_id`, `emp_name`, `is_hr`, `emp_email`, `emp_password`) VALUES
-(1, 'Shivraj Singh Rawat', 1, 'shivraj@infobeanns.com', '123456'),
+(1, 'Shivraj Singh Rawat', 1, 'shivraj@infobeans.com', '123456'),
 (2, 'Aditya Jain', 0, 'aditya@infobeans.com', '123456'),
 (3, 'Vikas Jangid', 0, 'vikas@infobeans.com', '123456'),
 (4, 'Anajli Goyal', 0, 'anajli@infobeans.com', '123456'),
