@@ -33,38 +33,73 @@ router.get('/:ticket_id?', function (req, res) {
     if (!req.params.ticket_id) {
         // send all tickets for dashboard  code here
 
-        Ticket.findAll()
-            .then((tickets) => {
-                let ticketsList = [];
-                for (const ticket of tickets) {
-                    ticketsList.push(ticket.dataValues);
-                }
+        if (!req.body.employee_data.is_hr) {
+            Ticket.findAll({ where: { emp_id: req.body.employee_data.emp_id } })
+                .then((tickets) => {
+                    let ticketsList = [];
+                    for (const ticket of tickets) {
+                        ticketsList.push(ticket.dataValues);
+                    }
 
-                if (ticketsList.length === 0) {
-                    res.status(404).json({
+                    if (ticketsList.length === 0) {
+                        res.status(404).json({
+                            status: 'success',
+                            message: 'No ticket found in database',
+                            data: { ticketsList },
+                        });
+                        return;
+                    }
+
+                    res.status(200).json({
                         status: 'success',
-                        message: 'No ticket found in database',
+                        message: 'Tickets successfully retrieved from database',
                         data: { ticketsList },
                     });
                     return;
-                }
+                })
+                .catch((err) => {
+                    console.log('Error: ', err);
+                    res.status(503).json({
+                        status: 'error',
+                        message: 'Error while querying tickets',
+                        data: {},
+                    });
+                    return;
+                });
+        } else {
+            Ticket.findAll()
+                .then((tickets) => {
+                    let ticketsList = [];
+                    for (const ticket of tickets) {
+                        ticketsList.push(ticket.dataValues);
+                    }
 
-                res.status(200).json({
-                    status: 'success',
-                    message: 'Tickets successfully retrieved from database',
-                    data: { ticketsList },
+                    if (ticketsList.length === 0) {
+                        res.status(404).json({
+                            status: 'success',
+                            message: 'No ticket found in database',
+                            data: { ticketsList },
+                        });
+                        return;
+                    }
+
+                    res.status(200).json({
+                        status: 'success',
+                        message: 'Tickets successfully retrieved from database',
+                        data: { ticketsList },
+                    });
+                    return;
+                })
+                .catch((err) => {
+                    console.log('Error: ', err);
+                    res.status(503).json({
+                        status: 'error',
+                        message: 'Error while querying tickets',
+                        data: {},
+                    });
+                    return;
                 });
-                return;
-            })
-            .catch((err) => {
-                console.log('Error: ', err);
-                res.status(503).json({
-                    status: 'error',
-                    message: 'Error while querying tickets',
-                    data: {},
-                });
-                return;
-            });
+        }
     } else {
         // supplied data for supplied ticket id  code here
         let ticket_id = req.params.ticket_id;
