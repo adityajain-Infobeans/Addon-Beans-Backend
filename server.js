@@ -76,7 +76,7 @@ app.use(express.json());
 
 const options = {
     swaggerDefinition,
-    apis: ['./route/a.js'],
+    apis: ['./route/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
