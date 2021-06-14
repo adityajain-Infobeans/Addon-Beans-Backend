@@ -34,7 +34,10 @@ router.get('/:comment_id', function (req, res) {
         if (comment_id[0] === 'T') {
             let ticket_id = comment_id.slice(2);
 
-            Comment.findAll({ where: { ticket_id: ticket_id } })
+            Comment.findAll({
+                where: { ticket_id: ticket_id },
+                order: [['comment_id', 'DESC']],
+            })
                 .then((comments) => {
                     let commentsValues = [];
                     for (const comment of comments) {
