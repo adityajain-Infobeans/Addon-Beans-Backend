@@ -70,4 +70,39 @@ router.post('/', function (req, res) {
         });
 });
 
+router.get('/', function (req, res) {
+    Employee.findAll({ attributes: ['emp_id', 'emp_name'] })
+        .then((employees) => {
+            let employeeList = [];
+            for (const employee of employees) {
+                employeeList.push(employee.dataValues);
+            }
+
+            if (employeeList.length === 0) {
+                res.status(404).json({
+                    status: 'success',
+                    message: 'No ticket found in database',
+                    data: { employeeList },
+                });
+                return;
+            }
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Tickets successfully retrieved from database',
+                data: { employeeList },
+            });
+            return;
+        })
+        .catch((err) => {
+            console.log('Error: ', err);
+            res.status(503).json({
+                status: 'error',
+                message: 'Error while querying employees data',
+                data: {},
+            });
+            return;
+        });
+});
+
 module.exports = router;
