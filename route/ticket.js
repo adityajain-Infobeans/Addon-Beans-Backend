@@ -25,10 +25,10 @@ router.get('/:ticket_id?', function (req, res) {
         // send all tickets for dashboard  code here
 
         const query = req.body.employee_data.is_hr
-            ? 'where: { emp_id: req.body.employee_data.emp_id  }'
-            : '';
+            ? {}
+            : { where: { emp_id: req.body.employee_data.emp_id } };
 
-        Ticket.findAll({ query })
+        Ticket.findAll(query)
             .then((tickets) => {
                 let ticketsList = [];
                 for (const ticket of tickets) {
