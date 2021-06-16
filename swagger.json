@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Support Ticket System ",
+        "title": "Support Requirement System ",
         "version": "1.0.0",
-        "description": "A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations",
+        "description": "A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Requirement-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Requirement-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations",
 
         "contact": {
             "name": "Aditya Jain",
@@ -35,8 +35,8 @@
         },
 
         {
-            "name": "Ticket",
-            "description": "Tickets CRUD API"
+            "name": "Requirement",
+            "description": "Requirements CRUD API"
         }
     ],
 
@@ -122,11 +122,11 @@
                 }
             }
         },
-        "/ticket/{ticket_id}": {
+        "/requirement/{requirement_id}": {
             "get": {
-                "summary": "Get ticket data",
-                "tags": ["Ticket"],
-                "description": "Will return ticket data associated with provided id.",
+                "summary": "Get requirement data",
+                "tags": ["Requirement"],
+                "description": "Will return requirement data associated with provided id.",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -137,32 +137,32 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "ticket_id",
+                        "name": "requirement_id",
                         "required": true,
                         "schema": {
                             "type": "integer",
                             "minimum": 1
                         },
-                        "description": "Ticket id (required)"
+                        "description": "Requirement id (required)"
                     }
                 ],
 
                 "responses": {
                     "200": {
-                        "description": "Ticket data successfully retrieved"
+                        "description": "Requirement data successfully retrieved"
                     },
                     "406": {
-                        "description": "Invalid ticket id"
+                        "description": "Invalid requirement id"
                     },
                     "500": {
-                        "description": "Error while querying ticket"
+                        "description": "Error while querying requirement"
                     }
                 }
             },
             "delete": {
-                "summary": "Delete ticket entry from database",
-                "tags": ["Ticket"],
-                "description": " Delete the ticket with provided ticket id from database",
+                "summary": "Delete requirement entry from database",
+                "tags": ["Requirement"],
+                "description": " Delete the requirement with provided requirement id from database",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -173,22 +173,22 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "ticket_id",
+                        "name": "requirement_id",
                         "required": true,
                         "schema": {
                             "type": "integer",
                             "minimum": 1
                         },
-                        "description": "Ticket id (required)"
+                        "description": "Requirement id (required)"
                     }
                 ],
 
                 "responses": {
                     "200": {
-                        "description": "Ticket deleted successfully"
+                        "description": "Requirement deleted successfully"
                     },
                     "400": {
-                        "description": "Ticket id is not provided"
+                        "description": "Requirement id is not provided"
                     },
                     "404": {
                         "description": "Id doesn't exist in database"
@@ -199,9 +199,9 @@
                 }
             },
             "put": {
-                "summary": "Update ticket entry in database.",
-                "tags": ["Ticket"],
-                "description": "Update the ticket entry with provided id in database",
+                "summary": "Update requirement entry in database.",
+                "tags": ["Requirement"],
+                "description": "Update the requirement entry with provided id in database",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -212,13 +212,13 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "ticket_id",
+                        "name": "requirement_id",
                         "required": true,
                         "schema": {
                             "type": "integer",
                             "minimum": 1
                         },
-                        "description": "Ticket id (required)"
+                        "description": "Requirement id (required)"
                     }
                 ],
                 "requestBody": {
@@ -262,25 +262,25 @@
 
                 "responses": {
                     "200": {
-                        "description": "Ticket successfully updated"
+                        "description": "Requirement successfully updated"
                     },
                     "400": {
-                        "description": "Ticket id is not provided"
+                        "description": "Requirement id is not provided"
                     },
                     "404": {
                         "description": "Id doesn't exist in database"
                     },
                     "500": {
-                        "description": "Error while updating ticket"
+                        "description": "Error while updating requirement"
                     }
                 }
             }
         },
-        "/ticket/": {
+        "/requirement/": {
             "get": {
-                "summary": "Get all ticket data",
-                "tags": ["Ticket"],
-                "description": "It will return all tickets data",
+                "summary": "Get all requirement data",
+                "tags": ["Requirement"],
+                "description": "It will return all requirements data",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -294,16 +294,16 @@
                         "description": "Employee Found"
                     },
                     "404": {
-                        "description": "No ticket found in database"
+                        "description": "No requirement found in database"
                     },
                     "503": {
-                        "description": "Error while querying tickets"
+                        "description": "Error while querying requirements"
                     }
                 }
             },
             "post": {
-                "summary": "Create new ticket entry in database.",
-                "tags": ["Ticket"],
+                "summary": "Create new requirement entry in database.",
+                "tags": ["Requirement"],
                 "description": "Create a new entry with provided data in database",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
@@ -353,22 +353,22 @@
 
                 "responses": {
                     "200": {
-                        "description": "Ticket created successfully"
+                        "description": "Requirement created successfully"
                     },
                     "400": {
                         "description": "Parameter missing"
                     },
                     "500": {
-                        "description": "Error while querying ticket"
+                        "description": "Error while querying requirement"
                     }
                 }
             }
         },
         "/summary/": {
             "get": {
-                "summary": "Get tickets summary",
-                "tags": ["Ticket"],
-                "description": "Fetch count of open tickets, closed tickets & total tickets",
+                "summary": "Get requirements summary",
+                "tags": ["Requirement"],
+                "description": "Fetch count of open requirements, closed requirements & total requirements",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -391,7 +391,7 @@
             "get": {
                 "summary": "Get comment data",
                 "tags": ["Comment"],
-                "description": "It will fetch all data associated with provided ticket id",
+                "description": "It will fetch all data associated with provided requirement id",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -520,11 +520,11 @@
                 }
             }
         },
-        "/comment/T_{ticket_id}": {
+        "/comment/T_{requirement_id}": {
             "get": {
-                "summary": "Get all comments of provided ticket",
+                "summary": "Get all comments of provided requirement",
                 "tags": ["Comment"],
-                "description": "It will fetch all comments associated with provided ticket id",
+                "description": "It will fetch all comments associated with provided requirement id",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
                 "security": [
@@ -535,13 +535,13 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "ticket_id",
+                        "name": "requirement_id",
                         "required": true,
                         "schema": {
                             "type": "integer",
                             "minimum": 1
                         },
-                        "description": "Ticket id (required)"
+                        "description": "Requirement id (required)"
                     }
                 ],
                 "responses": {
@@ -573,9 +573,9 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["comment", "ticket_id"],
+                                "required": ["comment", "requirement_id"],
                                 "properties": {
-                                    "ticket_id": {
+                                    "requirement_id": {
                                         "type": "integer"
                                     },
                                     "comment": {

@@ -32,10 +32,10 @@ router.get('/:comment_id', function (req, res) {
         let comment_id = req.params.comment_id;
 
         if (comment_id[0] === 'T') {
-            let ticket_id = comment_id.slice(2);
+            let requirement_id = comment_id.slice(2);
 
             Comment.findAll({
-                where: { ticket_id: ticket_id },
+                where: { requirement_id: requirement_id },
                 order: [['comment_id', 'DESC']],
             })
                 .then((comments) => {
@@ -101,10 +101,10 @@ router.post('/', function (req, res) {
     const emp_name = req.body.employee_data.emp_name;
     const created_on = todays_date() + ' by ' + req.body.employee_data.emp_name;
     const updated_on = `${todays_date()} by ${req.body.employee_data.emp_name}`;
-    const ticket_id = req.body.ticket_id;
+    const requirement_id = req.body.requirement_id;
     const comment = req.body.comment;
 
-    if (!(ticket_id && comment)) {
+    if (!(requirement_id && comment)) {
         res.status(400).json({
             status: 'error',
             message: 'Parameter missing',
@@ -119,7 +119,7 @@ router.post('/', function (req, res) {
             created_on: created_on,
             updated_on: updated_on,
             comment_by: emp_name,
-            ticket_id: ticket_id,
+            requirement_id: requirement_id,
             comment: comment,
         },
         {
@@ -128,7 +128,7 @@ router.post('/', function (req, res) {
                 'created_on',
                 'updated_on',
                 'comment_by',
-                'ticket_id',
+                'requirement_id',
                 'contact',
                 'comment',
             ],

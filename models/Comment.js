@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../database');
 const Employee = require('./Employee');
-const Ticket = require('./Ticket');
+const Requirement = require('./Requirement');
 
 const Comment = db.define(
     'Comment',
@@ -11,12 +11,12 @@ const Comment = db.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        ticket_id: {
+        requirement_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: Ticket,
-                key: 'ticket_id',
+                model: Requirement,
+                key: 'requirement_id',
             },
         },
         emp_id: {

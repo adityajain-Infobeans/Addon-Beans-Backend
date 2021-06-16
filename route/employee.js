@@ -81,7 +81,7 @@ router.get('/', function (req, res) {
             if (employeeList.length === 0) {
                 res.status(404).json({
                     status: 'success',
-                    message: 'No ticket found in database',
+                    message: 'No requirement found in database',
                     data: { employeeList },
                 });
                 return;
@@ -89,7 +89,7 @@ router.get('/', function (req, res) {
 
             res.status(200).json({
                 status: 'success',
-                message: 'Tickets successfully retrieved from database',
+                message: 'Requirements successfully retrieved from database',
                 data: { employeeList },
             });
             return;

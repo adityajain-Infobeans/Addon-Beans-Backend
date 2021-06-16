@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Ticket = require('../models/Ticket');
+const Requirement = require('../models/Requirement');
 const { Op } = require('sequelize');
 
-// tickets summary for dashboard
+// requirements summary for dashboard
 router.get('/', (req, res) => {
-    const totalTickets = Ticket.count({})
+    const totalRequirements = Requirement.count({})
         .then((data) => {
             return data;
         })
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
             console.log(err);
         });
 
-    const openTicket = Ticket.count({
+    const openRequirement = Requirement.count({
         where: {
             status: {
                 [Op.eq]: 1,
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
             console.log(err);
         });
 
-    const resolvedTicket = Ticket.count({
+    const resolvedRequirement = Requirement.count({
         where: {
             status: {
                 [Op.eq]: 2,
@@ -41,15 +41,15 @@ router.get('/', (req, res) => {
             console.log(err);
         });
 
-    Promise.all([totalTickets, openTicket, resolvedTicket])
+    Promise.all([totalRequirements, openRequirement, resolvedRequirement])
         .then((response) => {
             res.status(200).json({
                 status: 'success',
                 message: 'Data retrieved successfully',
                 data: {
-                    totalTickets: response[0],
-                    openTicket: response[1],
-                    resolvedTicket: response[2],
+                    totalRequirements: response[0],
+                    openRequirement: response[1],
+                    resolvedRequirement: response[2],
                 },
             });
         })

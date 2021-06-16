@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Ticket = require('../models/Ticket');
+const Requirement = require('../models/Requirement');
 const { Op } = require('sequelize');
 
 let todays_date = () => {
@@ -20,34 +20,35 @@ let todays_date = () => {
     return `${dd}-${mm}-${yyyy}`;
 };
 
-router.get('/:ticket_id?', function (req, res) {
-    if (!req.params.ticket_id) {
-        // send all tickets for dashboard  code here
+router.get('/:requirement_id?', function (req, res) {
+    if (!req.params.requirement_id) {
+        // send all requirements for dashboard  code here
 
         const query = req.body.employee_data.is_hr
             ? {}
             : { where: { emp_id: req.body.employee_data.emp_id } };
 
-        Ticket.findAll(query)
-            .then((tickets) => {
-                let ticketsList = [];
-                for (const ticket of tickets) {
-                    ticketsList.push(ticket.dataValues);
+        Requirement.findAll(query)
+            .then((requirements) => {
+                let requirementsList = [];
+                for (const requirement of requirements) {
+                    requirementsList.push(requirement.dataValues);
                 }
 
-                if (ticketsList.length === 0) {
+                if (requirementsList.length === 0) {
                     res.status(404).json({
                         status: 'success',
-                        message: 'No ticket found in database',
-                        data: { ticketsList },
+                        message: 'No requirement found in database',
+                        data: { requirementsList },
                     });
                     return;
                 }
 
                 res.status(200).json({
                     status: 'success',
-                    message: 'Tickets successfully retrieved from database',
-                    data: { ticketsList },
+                    message:
+                        'Requirements successfully retrieved from database',
+                    data: { requirementsList },
                 });
                 return;
             })
@@ -55,29 +56,29 @@ router.get('/:ticket_id?', function (req, res) {
                 console.log('Error: ', err);
                 res.status(503).json({
                     status: 'error',
-                    message: 'Error while querying tickets',
+                    message: 'Error while querying requirements',
                     data: {},
                 });
                 return;
             });
     } else {
-        // supplied data for supplied ticket id  code here
-        let ticket_id = req.params.ticket_id;
+        // supplied data for supplied requirement id  code here
+        let requirement_id = req.params.requirement_id;
 
-        Ticket.findByPk(ticket_id)
-            .then((ticket) => {
-                if (!ticket) {
+        Requirement.findByPk(requirement_id)
+            .then((requirement) => {
+                if (!requirement) {
                     res.status(200).json({
                         status: 'error',
-                        message: 'Invalid ticket id',
+                        message: 'Invalid requirement id',
                         data: {},
                     });
                     return;
                 }
                 res.status(200).json({
                     status: 'success',
-                    message: 'Ticket data successfully retrieved',
-                    data: ticket.dataValues,
+                    message: 'Requirement data successfully retrieved',
+                    data: requirement.dataValues,
                 });
                 return;
             })
@@ -85,7 +86,7 @@ router.get('/:ticket_id?', function (req, res) {
                 console.log('Error: ', err);
                 res.status(200).json({
                     status: 'error',
-                    message: 'Error while querying ticket',
+                    message: 'Error while querying requirement',
                     data: {},
                 });
                 return;
@@ -94,7 +95,7 @@ router.get('/:ticket_id?', function (req, res) {
 });
 
 router.post('/', function (req, res) {
-    // add ticket to db code here
+    // add requirement to db code here
 
     const emp_id = req.body.employee_data.emp_id;
     const created_on = todays_date() + ' by ' + req.body.employee_data.emp_name;
@@ -115,7 +116,7 @@ router.post('/', function (req, res) {
         return;
     }
 
-    Ticket.create(
+    Requirement.create(
         {
             emp_id: emp_id,
             created_on: created_on,
@@ -141,11 +142,11 @@ router.post('/', function (req, res) {
             ],
         }
     )
-        .then((ticket) => {
+        .then((requirement) => {
             res.status(200).json({
                 status: 'success',
-                message: 'Ticket created successfully',
-                data: ticket.dataValues,
+                message: 'Requirement created successfully',
+                data: requirement.dataValues,
             });
             return;
         })
@@ -153,25 +154,25 @@ router.post('/', function (req, res) {
             console.log('Error: ', err);
             res.status(503).json({
                 status: 'error',
-                message: 'Error while querying ticket',
+                message: 'Error while querying requirement',
                 data: {},
             });
             return;
         });
 });
 
-router.put('/:ticket_id', function (req, res) {
-    // update already existing ticket code here
+router.put('/:requirement_id', function (req, res) {
+    // update already existing requirement code here
 
-    if (!req.params.ticket_id) {
+    if (!req.params.requirement_id) {
         res.status(400).json({
             status: 'error',
-            message: 'Ticket id is not provided',
+            message: 'Requirement id is not provided',
             data: {},
         });
         return;
     } else {
-        const ticket_id = req.params.ticket_id;
+        const requirement_id = req.params.requirement_id;
         const updated_on = `${todays_date()} by ${
             req.body.employee_data.emp_name
         }`;
@@ -182,9 +183,9 @@ router.put('/:ticket_id', function (req, res) {
         const description = req.body.description;
         const client_id = req.body.client_id;
 
-        Ticket.findOne({ where: { ticket_id: ticket_id } })
-            .then((ticket) => {
-                Ticket.update(
+        Requirement.findOne({ where: { requirement_id: requirement_id } })
+            .then((requirement) => {
+                Requirement.update(
                     {
                         updated_on: updated_on,
                         status: status,
@@ -194,12 +195,12 @@ router.put('/:ticket_id', function (req, res) {
                         description: description,
                         client_id: client_id,
                     },
-                    { where: { ticket_id: ticket_id } }
+                    { where: { requirement_id: requirement_id } }
                 )
-                    .then((ticket) => {
+                    .then((requirement) => {
                         res.status(200).json({
                             status: 'success',
-                            message: 'Ticket successfully updated',
+                            message: 'Requirement successfully updated',
                             data: {},
                         });
                         return;
@@ -208,7 +209,7 @@ router.put('/:ticket_id', function (req, res) {
                         console.log('Error: ', err);
                         res.status(500).json({
                             status: 'error',
-                            message: 'Error while updating ticket',
+                            message: 'Error while updating requirement',
                             data: {},
                         });
                         return;
@@ -218,7 +219,7 @@ router.put('/:ticket_id', function (req, res) {
                 console.log('Error: ', err);
                 res.status(404).json({
                     status: 'error',
-                    message: 'Invalid ticket id',
+                    message: 'Invalid requirement id',
                     data: {},
                 });
                 return;
@@ -226,27 +227,27 @@ router.put('/:ticket_id', function (req, res) {
     }
 });
 
-router.delete('/:ticket_id', function (req, res) {
-    // delete ticket code here
+router.delete('/:requirement_id', function (req, res) {
+    // delete requirement code here
 
-    if (!req.params.ticket_id) {
+    if (!req.params.requirement_id) {
         res.status(400).json({
             status: 'error',
-            message: 'Ticket id is not provided',
+            message: 'Requirement id is not provided',
             data: {},
         });
         return;
     } else {
-        const ticket_id = req.params.ticket_id;
+        const requirement_id = req.params.requirement_id;
 
-        Ticket.destroy({
-            where: { ticket_id: ticket_id },
+        Requirement.destroy({
+            where: { requirement_id: requirement_id },
         })
             .then((data) => {
                 if (data) {
                     res.status(200).json({
                         status: 'success',
-                        message: 'Ticket deleted successfully',
+                        message: 'Requirement deleted successfully',
                         data: {},
                     });
                     return;

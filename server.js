@@ -12,7 +12,7 @@ const port = 3000;
 require('dotenv').config();
 
 const Employee = require('./route/employee');
-const Ticket = require('./route/ticket');
+const Requirement = require('./route/requirement');
 const Comment = require('./route/comment');
 const Client = require('./route/client');
 const Summary = require('./route/summary');
@@ -23,10 +23,10 @@ app.use(express.json());
 // const swaggerDefinition = {
 //     openapi: '3.0.0',
 //     info: {
-//         title: 'Support Ticket System ',
+//         title: 'Support Requirement System ',
 //         version: '1.0.0',
 //         description:
-//             'A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Ticket-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
+//             'A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Requirement-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Requirement-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
 
 //         contact: {
 //             name: 'Aditya Jain',
@@ -57,8 +57,8 @@ app.use(express.json());
 //             description: 'Employee login API',
 //         },
 //         {
-//             name: 'Ticket',
-//             description: 'Tickets CRUD API',
+//             name: 'Requirement',
+//             description: 'Requirements CRUD API',
 //         },
 //     ],
 
@@ -84,16 +84,16 @@ const swaggerSpec = swaggerJSDoc(options);
 /* 
 
 API :
-Ticket CRUD 
+Requirement CRUD 
 Comments CRUD 
 POST: Login Employee
-GET: tickets summary
-GET: allTickets
+GET: requirements summary
+GET: allRequirements
 GET: clients list
 
 */
 app.use('/employee', db_connect, Employee);
-app.use('/ticket', checkAuth, db_connect, Ticket);
+app.use('/requirement', checkAuth, db_connect, Requirement);
 app.use('/comment', checkAuth, db_connect, Comment);
 app.use('/client', checkAuth, db_connect, Client);
 app.use('/summary', checkAuth, db_connect, Summary);
