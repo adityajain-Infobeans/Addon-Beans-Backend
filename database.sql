@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2021 at 10:59 AM
+-- Generation Time: Jun 16, 2021 at 04:53 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `infobeans_clients` (
-  `client_id` int(11) NOT NULL,
+  `client_id` int(3) NOT NULL,
   `client_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -51,11 +51,11 @@ INSERT INTO `infobeans_clients` (`client_id`, `client_name`) VALUES
 --
 
 CREATE TABLE `infobeans_comments` (
-  `comment_id` int(11) NOT NULL,
-  `ticket_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
-  `comment_by` varchar(200) NOT NULL,
-  `comment` varchar(1000) NOT NULL,
+  `comment_id` int(4) NOT NULL,
+  `ticket_id` int(3) NOT NULL,
+  `emp_id` int(2) NOT NULL,
+  `comment_by` varchar(50) NOT NULL,
+  `comment` varchar(500) NOT NULL,
   `created_on` varchar(45) NOT NULL,
   `updated_on` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -67,11 +67,11 @@ CREATE TABLE `infobeans_comments` (
 --
 
 CREATE TABLE `infobeans_employee_details` (
-  `emp_id` int(11) NOT NULL,
-  `emp_name` varchar(45) NOT NULL,
-  `is_hr` int(11) NOT NULL DEFAULT 0 COMMENT '1 is for HR, 0 for manager',
-  `emp_email` varchar(200) NOT NULL,
-  `emp_password` varchar(200) NOT NULL
+  `emp_id` int(2) NOT NULL,
+  `emp_name` varchar(50) NOT NULL,
+  `is_hr` int(1) NOT NULL DEFAULT 0,
+  `emp_email` varchar(50) NOT NULL,
+  `emp_password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -94,21 +94,33 @@ INSERT INTO `infobeans_employee_details` (`emp_id`, `emp_name`, `is_hr`, `emp_em
 -- --------------------------------------------------------
 
 --
--- Table structure for table `infobeans_tickets`
+-- Table structure for table `infobeans_requirements`
 --
 
-CREATE TABLE `infobeans_tickets` (
-  `ticket_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+CREATE TABLE `infobeans_requirements` (
+  `requirement_id` int(3) NOT NULL,
+  `emp_id` int(2) NOT NULL,
   `created_on` varchar(45) NOT NULL,
   `updated_on` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT 'Open',
-  `description` varchar(60000) NOT NULL,
-  `priority` varchar(45) NOT NULL,
-  `contact` varchar(15) DEFAULT NULL,
-  `subject` varchar(500) NOT NULL,
-  `client_id` int(11) NOT NULL
+  `status` int(1) DEFAULT 1,
+  `additional_note` varchar(600) NOT NULL,
+  `timeline` varchar(45) NOT NULL,
+  `number_of_position` int(2) NOT NULL,
+  `skill_set` varchar(300) NOT NULL,
+  `experience` int(2) NOT NULL,
+  `client_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `infobeans_skill_set`
+--
+
+CREATE TABLE `infobeans_skill_set` (
+  `skill_id` int(2) NOT NULL,
+  `skill_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -137,13 +149,19 @@ ALTER TABLE `infobeans_employee_details`
   ADD UNIQUE KEY `emp_id_UNIQUE` (`emp_id`);
 
 --
--- Indexes for table `infobeans_tickets`
+-- Indexes for table `infobeans_requirements`
 --
-ALTER TABLE `infobeans_tickets`
-  ADD PRIMARY KEY (`ticket_id`),
-  ADD UNIQUE KEY `ticket_id_UNIQUE` (`ticket_id`),
+ALTER TABLE `infobeans_requirements`
+  ADD PRIMARY KEY (`requirement_id`),
+  ADD UNIQUE KEY `ticket_id_UNIQUE` (`requirement_id`),
   ADD KEY `EMP_ID_REL_idx` (`emp_id`),
   ADD KEY `CLIENT_REL` (`client_id`);
+
+--
+-- Indexes for table `infobeans_skill_set`
+--
+ALTER TABLE `infobeans_skill_set`
+  ADD PRIMARY KEY (`skill_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -153,25 +171,31 @@ ALTER TABLE `infobeans_tickets`
 -- AUTO_INCREMENT for table `infobeans_clients`
 --
 ALTER TABLE `infobeans_clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `client_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `infobeans_comments`
 --
 ALTER TABLE `infobeans_comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `infobeans_employee_details`
 --
 ALTER TABLE `infobeans_employee_details`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `emp_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `infobeans_tickets`
+-- AUTO_INCREMENT for table `infobeans_requirements`
 --
-ALTER TABLE `infobeans_tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `infobeans_requirements`
+  MODIFY `requirement_id` int(3) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `infobeans_skill_set`
+--
+ALTER TABLE `infobeans_skill_set`
+  MODIFY `skill_id` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -182,12 +206,12 @@ ALTER TABLE `infobeans_tickets`
 --
 ALTER TABLE `infobeans_comments`
   ADD CONSTRAINT `EMPID_REL` FOREIGN KEY (`emp_id`) REFERENCES `infobeans_employee_details` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `TICKET_REL` FOREIGN KEY (`ticket_id`) REFERENCES `infobeans_tickets` (`ticket_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `TICKET_REL` FOREIGN KEY (`ticket_id`) REFERENCES `infobeans_requirements` (`requirement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `infobeans_tickets`
+-- Constraints for table `infobeans_requirements`
 --
-ALTER TABLE `infobeans_tickets`
+ALTER TABLE `infobeans_requirements`
   ADD CONSTRAINT `CLIENT_REL` FOREIGN KEY (`client_id`) REFERENCES `infobeans_clients` (`client_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `EMP_ID_REL` FOREIGN KEY (`emp_id`) REFERENCES `infobeans_employee_details` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
