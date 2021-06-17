@@ -14,7 +14,7 @@ router.get('/:skill_set?', function (req, res) {
 
                 res.status(200).json({
                     status: 'success',
-                    message: 'All SkillSets successfully retrieved',
+                    message: 'All skill sets successfully retrieved',
                     data: SkillSetsValues,
                 });
                 return;
@@ -107,16 +107,15 @@ router.post('/', function (req, res) {
 router.put('/:skill_set', function (req, res) {
     // update already existing SkillSet code here
 
-    if (!req.params.skill_set) {
+    if (!(req.params.skill_set && req.body.skill_name)) {
         res.status(400).json({
             status: 'error',
-            message: 'SkillSet id is not provided',
+            message: 'SkillSet id or Skill name is not provided',
             data: {},
         });
         return;
     } else {
         const skill_set = req.params.skill_set;
-
         const skill_name = req.body.skill_name;
 
         SkillSet.findOne({ where: { skill_id: skill_set } })
