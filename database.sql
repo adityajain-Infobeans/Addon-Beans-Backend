@@ -114,10 +114,10 @@ CREATE TABLE `infobeans_requirements` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `infobeans_skill_set`
+-- Table structure for table `infobeans_skill_sets`
 --
 
-CREATE TABLE `infobeans_skill_set` (
+CREATE TABLE `infobeans_skill_sets` (
   `skill_id` int(2) NOT NULL,
   `skill_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -158,9 +158,9 @@ ALTER TABLE `infobeans_requirements`
   ADD KEY `CLIENT_REL` (`client_id`);
 
 --
--- Indexes for table `infobeans_skill_set`
+-- Indexes for table `infobeans_skill_sets`
 --
-ALTER TABLE `infobeans_skill_set`
+ALTER TABLE `infobeans_skill_sets`
   ADD PRIMARY KEY (`skill_id`);
 
 --
@@ -192,9 +192,9 @@ ALTER TABLE `infobeans_requirements`
   MODIFY `requirement_id` int(3) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `infobeans_skill_set`
+-- AUTO_INCREMENT for table `infobeans_skill_sets`
 --
-ALTER TABLE `infobeans_skill_set`
+ALTER TABLE `infobeans_skill_sets`
   MODIFY `skill_id` int(2) NOT NULL AUTO_INCREMENT;
 
 --
