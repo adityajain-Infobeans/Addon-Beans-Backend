@@ -16,6 +16,7 @@ const Requirement = require('./route/requirement');
 const Comment = require('./route/comment');
 const Client = require('./route/client');
 const Summary = require('./route/summary');
+const SkillSets = require('./route/skillSet');
 
 app.use(cors());
 app.use(express.json());
@@ -86,6 +87,7 @@ const swaggerSpec = swaggerJSDoc(options);
 API :
 Requirement CRUD 
 Comments CRUD 
+Skill Set CRUD 
 POST: Login Employee
 GET: requirements summary
 GET: allRequirements
@@ -95,6 +97,7 @@ GET: clients list
 app.use('/employee', db_connect, Employee);
 app.use('/requirement', checkAuth, db_connect, Requirement);
 app.use('/comment', checkAuth, db_connect, Comment);
+app.use('/skillset', checkAuth, db_connect, SkillSets);
 app.use('/client', checkAuth, db_connect, Client);
 app.use('/summary', checkAuth, db_connect, Summary);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
