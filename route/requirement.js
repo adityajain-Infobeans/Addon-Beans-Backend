@@ -101,13 +101,23 @@ router.post('/', function (req, res) {
     const created_on = todays_date() + ' by ' + req.body.employee_data.emp_name;
     const updated_on = `${todays_date()} by ${req.body.employee_data.emp_name}`;
     const status = 1;
-    const priority = req.body.priority;
-    const contact = req.body.contact ? req.body.contact : null;
-    const subject = req.body.subject;
-    const description = req.body.description;
+    const timeline = req.body.timeline;
+    const number_of_position = req.body.number_of_position;
+    const skill_set = JSON.stringify(req.body.skill_set);
+    const additional_note = req.body.additional_note;
+    const experience = req.body.experience;
     const client_id = req.body.client_id;
 
-    if (!(priority && subject && client_id && description)) {
+    if (
+        !(
+            timeline &&
+            number_of_position &&
+            skill_set &&
+            additional_note &&
+            experience &&
+            client_id
+        )
+    ) {
         res.status(400).json({
             status: 'error',
             message: 'Parameter missing',
@@ -122,10 +132,11 @@ router.post('/', function (req, res) {
             created_on: created_on,
             updated_on: updated_on,
             status: status,
-            priority: priority,
-            contact: contact,
-            subject: subject,
-            description: description,
+            timeline: timeline,
+            number_of_position: number_of_position,
+            skill_set: skill_set,
+            additional_note: additional_note,
+            experience: experience,
             client_id: client_id,
         },
         {
@@ -134,10 +145,11 @@ router.post('/', function (req, res) {
                 'created_on',
                 'updated_on',
                 'status',
-                'priority',
-                'contact',
-                'subject',
-                'description',
+                'timeline',
+                'number_of_position',
+                'skill_set',
+                'additional_note',
+                'experience',
                 'client_id',
             ],
         }
@@ -177,10 +189,10 @@ router.put('/:requirement_id', function (req, res) {
             req.body.employee_data.emp_name
         }`;
         const status = req.body.status;
-        const priority = req.body.priority;
-        const contact = req.body.contact;
-        const subject = req.body.subject;
-        const description = req.body.description;
+        const timeline = req.body.timeline;
+        const number_of_position = req.body.number_of_position;
+        const skill_set = JSON.stringify(req.body.skill_set);
+        const experience = req.body.experience;
         const client_id = req.body.client_id;
 
         Requirement.findOne({ where: { requirement_id: requirement_id } })
@@ -189,10 +201,10 @@ router.put('/:requirement_id', function (req, res) {
                     {
                         updated_on: updated_on,
                         status: status,
-                        priority: priority,
-                        contact: contact,
-                        subject: subject,
-                        description: description,
+                        timeline: timeline,
+                        number_of_position: number_of_position,
+                        skill_set: skill_set,
+                        experience: experience,
                         client_id: client_id,
                     },
                     { where: { requirement_id: requirement_id } }
