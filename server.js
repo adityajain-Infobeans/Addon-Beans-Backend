@@ -21,60 +21,6 @@ const SkillSets = require('./route/skillSet');
 app.use(cors());
 app.use(express.json());
 
-// const swaggerDefinition = {
-//     openapi: '3.0.0',
-//     info: {
-//         title: 'Support Requirement System ',
-//         version: '1.0.0',
-//         description:
-//             'A simple web application where [Frontend](https://github.com/adityajain-Infobeans/Support-Requirement-System-Frontend) is created using Vue and [Backend](https://github.com/adityajain-Infobeans/Support-Requirement-System-Backend) is created on node using express. Frontend will communicate with Backend via REST APIs for authentication and database operations',
-
-//         contact: {
-//             name: 'Aditya Jain',
-//             url: 'https://aadityajain.dev',
-//             email: 'adityan.jain@infobeans.com',
-//         },
-//     },
-//     components: {
-//         securitySchemes: {
-//             bearerAuth: {
-//                 type: 'http',
-//                 scheme: 'bearer',
-//                 bearerFormat: 'JWT',
-//             },
-//         },
-//     },
-//     tags: [
-//         {
-//             name: 'Client',
-//             description: 'Client list API',
-//         },
-//         {
-//             name: 'Comment',
-//             description: 'Comments CRUD API',
-//         },
-//         {
-//             name: 'Employee',
-//             description: 'Employee login API',
-//         },
-//         {
-//             name: 'Requirement',
-//             description: 'Requirements CRUD API',
-//         },
-//     ],
-
-//     servers: [
-//         {
-//             url: 'http://localhost:3000',
-//             description: 'Development server',
-//         },
-//         {
-//             url: 'https://infobeans-support.herokuapp.com/',
-//             description: 'Production server',
-//         },
-//     ],
-// };
-
 const options = {
     swaggerDefinition,
     apis: ['./route/*.js'],

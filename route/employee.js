@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Employee = require('../models/Employee');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 router.post('/', function (req, res) {
@@ -17,9 +18,19 @@ router.post('/', function (req, res) {
     const emp_password = req.body.password;
 
     Employee.findOne({
-        where: { emp_email: emp_email, emp_password: emp_password },
+        where: { emp_email: emp_email },
     })
         .then((data) => {
+            if (
+                !bcrypt.compareSync(emp_password, data.dataValues.emp_password)
+            ) {
+                res.status(401).json({
+                    status: 'error',
+                    message: 'wrong username or password',
+                    data: {},
+                });
+            }
+
             if (data !== null) {
                 let employee_data = {
                     emp_id: data.dataValues.emp_id,
