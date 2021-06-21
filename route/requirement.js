@@ -48,7 +48,7 @@ router.get('/:requirement_id?', function (req, res) {
                 if (requirementsList.length === 0) {
                     res.status(404).json({
                         status: 'success',
-                        message: 'No requirement found in database',
+                        message: "You haven't raised any requirement yet",
                         data: { requirementsList },
                     });
                     return;
