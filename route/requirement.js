@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Requirement = require('../models/Requirement');
+const Client = require('../models/Client');
 const { Op } = require('sequelize');
 
 let todays_date = () => {
@@ -26,14 +27,23 @@ router.get('/:requirement_id?', function (req, res) {
 
         const query = req.body.employee_data.is_hr
             ? {}
-            : { where: { emp_id: req.body.employee_data.emp_id } };
+            : {
+                  where: { emp_id: req.body.employee_data.emp_id },
+                  include: [
+                      {
+                          model: Client,
+                      },
+                  ],
+              };
 
         Requirement.findAll(query)
             .then((requirements) => {
                 let requirementsList = [];
+
                 for (const requirement of requirements) {
                     requirementsList.push(requirement.dataValues);
                 }
+                console.log();
 
                 if (requirementsList.length === 0) {
                     res.status(404).json({
@@ -104,7 +114,9 @@ router.post('/', function (req, res) {
     const timeline = req.body.timeline;
     const number_of_position = req.body.number_of_position;
     const skill_set = JSON.stringify(req.body.skill_set);
-    const additional_note = req.body.additional_note;
+    const additional_note = req.body.additional_note
+        ? req.body.additional_note
+        : null;
     const experience = req.body.experience;
     const client_id = req.body.client_id;
 
@@ -113,7 +125,6 @@ router.post('/', function (req, res) {
             timeline &&
             number_of_position &&
             skill_set &&
-            additional_note &&
             experience &&
             client_id
         )

@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../database');
 const Employee = require('./Employee');
 const Client = require('./Client');
+const SkillSet = require('./SkillSet');
 
 const Requirement = db.define(
     'Requirement',
@@ -29,7 +30,7 @@ const Requirement = db.define(
         },
         additional_note: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
 
         skill_set: {
@@ -67,5 +68,11 @@ const Requirement = db.define(
         timestamps: false,
     }
 );
+
+//Relations
+Requirement.belongsTo(Client, {
+    foreignKey: 'client_id',
+    sourceKey: 'client_id',
+});
 
 module.exports = Requirement;
