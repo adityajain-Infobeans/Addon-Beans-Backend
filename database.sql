@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2021 at 04:53 PM
+-- Generation Time: Jun 22, 2021 at 11:16 AM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -52,7 +52,7 @@ INSERT INTO `infobeans_clients` (`client_id`, `client_name`) VALUES
 
 CREATE TABLE `infobeans_comments` (
   `comment_id` int(4) NOT NULL,
-  `ticket_id` int(3) NOT NULL,
+  `requirement_id` int(3) NOT NULL,
   `emp_id` int(2) NOT NULL,
   `comment_by` varchar(50) NOT NULL,
   `comment` varchar(500) NOT NULL,
@@ -69,27 +69,28 @@ CREATE TABLE `infobeans_comments` (
 CREATE TABLE `infobeans_employee_details` (
   `emp_id` int(2) NOT NULL,
   `emp_name` varchar(50) NOT NULL,
+  `is_active` int(1) NOT NULL DEFAULT 1,
   `is_hr` int(1) NOT NULL DEFAULT 0,
   `emp_email` varchar(50) NOT NULL,
-  `emp_password` varchar(50) NOT NULL
+  `emp_password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `infobeans_employee_details`
 --
 
-INSERT INTO `infobeans_employee_details` (`emp_id`, `emp_name`, `is_hr`, `emp_email`, `emp_password`) VALUES
-(1, 'Shivraj Singh Rawat', 1, 'shivraj@infobeans.com', '123456'),
-(2, 'Aditya Jain', 0, 'aditya@infobeans.com', '123456'),
-(3, 'Vikas Jangid', 0, 'vikas@infobeans.com', '123456'),
-(4, 'Anajli Goyal', 0, 'anajli@infobeans.com', '123456'),
-(5, 'Geetanjali Katare', 0, 'geetanjali@infobeans.com', '123456'),
-(6, 'Aayush Sharma', 0, 'aayush@infobeans.com', '123456'),
-(7, 'Ayushi Jain', 0, 'ayushi@infobeans.com', '123456'),
-(8, 'Abhishek Patel', 0, 'abhishek.p@infobeans.com', '123456'),
-(9, 'Abhishek Vishwakarma', 0, 'abhishek.v@infobeans.com', '123456'),
-(10, 'Faizee Bano', 0, 'faizee.bano@infobeans.com', '123456'),
-(11, 'Madhav Singh', 0, 'madhav@infobeans.com', '123456');
+INSERT INTO `infobeans_employee_details` (`emp_id`, `emp_name`, `is_active`, `is_hr`, `emp_email`, `emp_password`) VALUES
+(1, 'Shivraj Singh Rawat', 1, 1, 'shivraj@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(2, 'Aditya Jain', 1, 0, 'aditya@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(3, 'Vikas Jangid', 1, 0, 'vikas@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(4, 'Anajli Goyal', 1, 0, 'anajli@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(5, 'Geetanjali Katare', 1, 0, 'geetanjali@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(6, 'Aayush Sharma', 1, 0, 'aayush@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(7, 'Ayushi Jain', 1, 0, 'ayushi@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(8, 'Abhishek Patel', 1, 0, 'abhishek.p@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(9, 'Abhishek Vishwakarma', 1, 0, 'abhishek.v@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(10, 'Faizee Bano', 1, 0, 'faizee.bano@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6'),
+(11, 'Madhav Singh', 1, 0, 'madhav@infobeans.com', '$2b$10$OwHZbXnPqe50qAEv/BNabu.RrIZ1ioDSxqGNFfBzkUfF38FoHsuT6');
 
 -- --------------------------------------------------------
 
@@ -101,10 +102,10 @@ CREATE TABLE `infobeans_requirements` (
   `requirement_id` int(3) NOT NULL,
   `emp_id` int(2) NOT NULL,
   `created_on` varchar(45) NOT NULL,
-  `updated_on` varchar(45) DEFAULT NULL,
-  `status` int(1) DEFAULT 1,
-  `additional_note` varchar(600) NOT NULL,
-  `timeline` varchar(45) NOT NULL,
+  `updated_on` varchar(45) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `additional_note` varchar(600) DEFAULT NULL,
+  `timeline` int(1) NOT NULL,
   `number_of_position` int(2) NOT NULL,
   `skill_set` varchar(300) NOT NULL,
   `experience` int(2) NOT NULL,
@@ -123,6 +124,24 @@ CREATE TABLE `infobeans_skill_sets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `infobeans_skill_sets`
+--
+
+INSERT INTO `infobeans_skill_sets` (`skill_id`, `skill_name`) VALUES
+(10, 'Angular'),
+(12, 'Drupal'),
+(4, 'Go'),
+(1, 'Java'),
+(6, 'NodeJs'),
+(7, 'Perl'),
+(5, 'PHP'),
+(2, 'Python 2'),
+(3, 'Python 3'),
+(8, 'React'),
+(9, 'Vue'),
+(11, 'Wordpress');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -138,7 +157,7 @@ ALTER TABLE `infobeans_clients`
 ALTER TABLE `infobeans_comments`
   ADD PRIMARY KEY (`comment_id`),
   ADD KEY `EMPID_REL_idx` (`emp_id`),
-  ADD KEY `TICKET_REL_idx` (`ticket_id`);
+  ADD KEY `TICKET_REL_idx` (`requirement_id`);
 
 --
 -- Indexes for table `infobeans_employee_details`
@@ -161,7 +180,8 @@ ALTER TABLE `infobeans_requirements`
 -- Indexes for table `infobeans_skill_sets`
 --
 ALTER TABLE `infobeans_skill_sets`
-  ADD PRIMARY KEY (`skill_id`);
+  ADD PRIMARY KEY (`skill_id`),
+  ADD UNIQUE KEY `skill_name` (`skill_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -183,7 +203,7 @@ ALTER TABLE `infobeans_comments`
 -- AUTO_INCREMENT for table `infobeans_employee_details`
 --
 ALTER TABLE `infobeans_employee_details`
-  MODIFY `emp_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `emp_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `infobeans_requirements`
@@ -195,7 +215,7 @@ ALTER TABLE `infobeans_requirements`
 -- AUTO_INCREMENT for table `infobeans_skill_sets`
 --
 ALTER TABLE `infobeans_skill_sets`
-  MODIFY `skill_id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `skill_id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -206,7 +226,7 @@ ALTER TABLE `infobeans_skill_sets`
 --
 ALTER TABLE `infobeans_comments`
   ADD CONSTRAINT `EMPID_REL` FOREIGN KEY (`emp_id`) REFERENCES `infobeans_employee_details` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `TICKET_REL` FOREIGN KEY (`ticket_id`) REFERENCES `infobeans_requirements` (`requirement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `TICKET_REL` FOREIGN KEY (`requirement_id`) REFERENCES `infobeans_requirements` (`requirement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `infobeans_requirements`
