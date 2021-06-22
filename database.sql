@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2021 at 11:16 AM
+-- Generation Time: Jun 22, 2021 at 02:19 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -112,6 +112,24 @@ CREATE TABLE `infobeans_requirements` (
   `client_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `infobeans_requirements`
+--
+
+INSERT INTO `infobeans_requirements` (`requirement_id`, `emp_id`, `created_on`, `updated_on`, `status`, `additional_note`, `timeline`, `number_of_position`, `skill_set`, `experience`, `client_id`) VALUES
+(1, 2, '22-06-2021 by Aditya Jain', '22-06-2021 by Aditya Jain', 1, NULL, 2, 3, '[8,6]', 1, 2),
+(2, 3, '22-06-2021 by Vikas Jangid', '22-06-2021 by Vikas Jangid', 1, NULL, 4, 2, '[5]', 3, 5),
+(3, 4, '22-06-2021 by Anajli Goyal', '22-06-2021 by Anajli Goyal', 1, NULL, 6, 3, '[6]', 10, 3),
+(4, 5, '22-06-2021 by Geetanjali Katare', '22-06-2021 by Geetanjali Katare', 1, NULL, 1, 2, '[11]', 4, 1),
+(5, 6, '22-06-2021 by Aayush Sharma', '22-06-2021 by Aayush Sharma', 1, NULL, 2, 19, '[11]', 1, 2),
+(6, 7, '22-06-2021 by Ayushi Jain', '22-06-2021 by Ayushi Jain', 1, NULL, 7, 2, '[12]', 2, 4),
+(7, 8, '22-06-2021 by Abhishek Patel', '22-06-2021 by Abhishek Patel', 1, NULL, 4, 12, '[10,5]', 1, 6),
+(8, 8, '22-06-2021 by Abhishek Patel', '22-06-2021 by Shivraj Singh Rawat', 2, NULL, 2, 10, '[4,9]', 2, 5),
+(9, 9, '22-06-2021 by Abhishek Vishwakarma', '22-06-2021 by Abhishek Vishwakarma', 1, NULL, 1, 2, '[3,8]', 2, 3),
+(10, 10, '22-06-2021 by Faizee Bano', '22-06-2021 by Faizee Bano', 1, NULL, 5, 3, '[2,9]', 5, 5),
+(11, 11, '22-06-2021 by Madhav Singh', '22-06-2021 by Madhav Singh', 1, NULL, 6, 12, '[12]', 2, 4),
+(12, 2, '22-06-2021 by Aditya Jain', '22-06-2021 by Aditya Jain', 1, NULL, 1, 2, '[9,5]', 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -209,7 +227,7 @@ ALTER TABLE `infobeans_employee_details`
 -- AUTO_INCREMENT for table `infobeans_requirements`
 --
 ALTER TABLE `infobeans_requirements`
-  MODIFY `requirement_id` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `requirement_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `infobeans_skill_sets`
