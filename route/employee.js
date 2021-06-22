@@ -21,17 +21,29 @@ router.post('/', function (req, res) {
         where: { emp_email: emp_email },
     })
         .then((data) => {
-            if (
-                !bcrypt.compareSync(emp_password, data.dataValues.emp_password)
-            ) {
-                res.status(401).json({
-                    status: 'error',
-                    message: 'wrong username or password',
-                    data: {},
-                });
-            }
-
             if (data !== null) {
+                if (!data.dataValues.is_active) {
+                    res.status(401).json({
+                        status: 'error',
+                        message:
+                            'Your account is deactivated, please contact IT team.',
+                        data: {},
+                    });
+                    return;
+                } else if (
+                    !bcrypt.compareSync(
+                        emp_password,
+                        data.dataValues.emp_password
+                    )
+                ) {
+                    res.status(401).json({
+                        status: 'error',
+                        message: 'wrong username or password',
+                        data: {},
+                    });
+                    return;
+                }
+
                 let employee_data = {
                     emp_id: data.dataValues.emp_id,
                     emp_name: data.dataValues.emp_name,
