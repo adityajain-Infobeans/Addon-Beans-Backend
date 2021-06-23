@@ -5,6 +5,34 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+function checkAuth(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (authHeader && token) {
+        jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.status(401).json({
+                    status: 'error',
+                    message: 'JWT auth failed',
+                    data: {},
+                });
+                return;
+            }
+            req.body.employee_data = data;
+            next();
+        });
+    } else {
+        res.status(400).json({
+            status: 'error',
+            message: 'JWT not provided',
+            data: {},
+        });
+        return;
+    }
+}
+
 router.post('/', function (req, res) {
     if (!req.body.email || !req.body.password) {
         res.status(400).json({
@@ -93,7 +121,7 @@ router.post('/', function (req, res) {
         });
 });
 
-router.get('/', function (req, res) {
+router.get('/', checkAuth, function (req, res) {
     Employee.findAll({ attributes: ['emp_id', 'emp_name'] })
         .then((employees) => {
             let employeeList = [];
