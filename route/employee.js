@@ -156,4 +156,60 @@ router.get('/', checkAuth, function (req, res) {
         });
 });
 
+router.put('/', checkAuth, function (req, res) {
+    if (!req.body.newPassword) {
+        res.status(400).json({
+            status: 'error',
+            message: 'Some Parameter missing',
+            data: {},
+        });
+        return;
+    }
+    const emp_email = req.body.employee_data.emp_email;
+    const emp_newPassword = req.body.newPassword;
+
+    Employee.findOne({
+        where: { emp_email: emp_email },
+    })
+        .then((data) => {
+            if (data !== null) {
+                const hash = bcrypt.hashSync(emp_newPassword, 10);
+
+                Employee.update(
+                    {
+                        emp_password: hash,
+                    },
+                    { where: { emp_email: emp_email } }
+                )
+                    .then((employee) => {
+                        res.status(200).json({
+                            status: 'success',
+                            message: 'Password successfully updated',
+                            data: {},
+                        });
+                        return;
+                    })
+                    .catch((err) => {
+                        console.log('Error: ', err);
+                        res.status(500).json({
+                            status: 'error',
+                            message: 'Error while updating password',
+                            data: {},
+                        });
+                        return;
+                    });
+            }
+        })
+
+        .catch((err) => {
+            console.log('error: ', err);
+
+            res.status(500).json({
+                status: 'error',
+                message: 'error occurred while querying',
+                data: {},
+            });
+        });
+});
+
 module.exports = router;
