@@ -5,7 +5,17 @@ const { Op } = require('sequelize');
 
 // requirements summary for dashboard
 router.get('/', (req, res) => {
-    const totalRequirements = Requirement.count({})
+    let query = req.body.employee_data.is_hr
+        ? {}
+        : {
+              where: {
+                  emp_id: {
+                      [Op.eq]: req.body.employee_data.emp_id,
+                  },
+              },
+          };
+
+    const totalRequirements = Requirement.count(query)
         .then((data) => {
             return data;
         })
@@ -13,13 +23,26 @@ router.get('/', (req, res) => {
             console.log(err);
         });
 
-    const openRequirement = Requirement.count({
-        where: {
-            status: {
-                [Op.eq]: 1,
-            },
-        },
-    })
+    query = req.body.employee_data.is_hr
+        ? {
+              where: {
+                  status: {
+                      [Op.eq]: 1,
+                  },
+              },
+          }
+        : {
+              where: {
+                  status: {
+                      [Op.eq]: 1,
+                  },
+                  emp_id: {
+                      [Op.eq]: req.body.employee_data.emp_id,
+                  },
+              },
+          };
+
+    const openRequirement = Requirement.count(query)
         .then((data) => {
             return data;
         })
@@ -27,13 +50,26 @@ router.get('/', (req, res) => {
             console.log(err);
         });
 
-    const resolvedRequirement = Requirement.count({
-        where: {
-            status: {
-                [Op.eq]: 2,
-            },
-        },
-    })
+    query = req.body.employee_data.is_hr
+        ? {
+              where: {
+                  status: {
+                      [Op.eq]: 2,
+                  },
+              },
+          }
+        : {
+              where: {
+                  status: {
+                      [Op.eq]: 2,
+                  },
+                  emp_id: {
+                      [Op.eq]: req.body.employee_data.emp_id,
+                  },
+              },
+          };
+
+    const resolvedRequirement = Requirement.count(query)
         .then((data) => {
             return data;
         })
