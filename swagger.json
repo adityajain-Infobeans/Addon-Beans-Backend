@@ -79,7 +79,7 @@
             "post": {
                 "summary": "Authenticate user & provide JWT",
                 "tags": ["Employee"],
-                "description": "Checks provided user credentials with the database, if they match, authorize user & provide JWT,else send error message",
+                "description": "Checks provided user credentials with the database, if they match, authorize user & provide JWT, else send error message",
                 "consumes": ["application/json"],
                 "produces": ["application/json"],
 
@@ -111,7 +111,7 @@
                         "description": "No Employee found with these credentials"
                     },
                     "500": {
-                        "description": "error occurred while querying"
+                        "description": "Error occurred while querying"
                     },
                     "503": {
                         "description": "Error while signing JWT"
